@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Coverage of Ford and Kavanaugh's hearings</title>
+		<script src="https://d3js.org/d3.v4.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js"></script>
+		<link type="text/css" href="css/KavanaughFord_scrolly.css" rel="stylesheet"/>
+
+	</head>
+	<body>
+		<div class="opener-title">
+		  <p id="opener-title">How cable networks covered Ford and Kavanaugh's hearings</p>
+		  <p id="opener-subtitle">An analysis of chyrons run during the two hearings on<br>MSNBC, CNN, and the Fox News Channel.</p>
+		</div>
+		<div class="body-container-first">
+			<div class="prose-first" id="prose-first-1">You know those captions that appear on the lower part of your TV screen when you’re watching cable news?</div>
+			<div class="prose-first" id="prose-first-2">These captions, also known as “lower-third chyrons,” are oftentimes treated like headlines of an article - quick summaries of the news and topic at-hand. And while many of these captions are unbiased overviews of the news topic, they can still be a window into how breaking news stories are reported by cable news networks.</div>
+			<div class="prose-first" id="prose-first-3">On September 16, 2018, MSNBC, CNN and Fox News covered the nearly six hours of Christine Blasey Ford’s and Brett Kavanaugh’s hearings. While all three provided similar live video coverage, the captions that came alongside them differed in who was quoted, what was emphasized, and what was not emphasized.</div>
+		</div>
+		<div class="body-container-rect">
+			<svg id="svg-first-rect" width="800" height="200">
+				<rect class="rect-first" id="msnbc_rect" width="220", height="120"/>
+				<rect class="rect-first" id="cnn_rect" width="220", height="120"/>
+				<rect class="rect-first" id="fox_rect" width="220", height="120"/>
+			</svg>
+		</div>
+		<div class="container">
+			<div id="div2">
+				<div id="circle"></div>
+			</div>
+			<div id="div3">
+				<div id="circle"></div>
+			</div>
+			<div id="div4">
+				<div id="circle"></div>
+			</div>
+			<div id="div5">
+				<div id="circle"></div>
+			</div>
+			<div id="div6">
+				<div id="circle"></div>
+			</div>
+			<div id="div7">
+				<div id="circle"></div>
+			</div>
+			<div id="div8">
+				<div id="circle"></div>
+			</div>
+			<div id="div9">
+				<div id="circle"></div>
+			</div>
+			<div id="div10">
+				<div id="circle"></div>
+			</div>
+			<div id="div11">
+				<div id="circle"></div>
+			</div>
+			<div id="div_last">
+				<div id="circle"></div>
+			</div>
+		</div>
+		<div id="graphic">
+			<div class="fixed">
+				<svg id="viz" width="100%" height="100%"></svg>
+				<input id="slider" class="slider" type="range" min="0" max="8" step="1" value="0" orient="horizontal"></input>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/build.js"></script>
+		<script type="text/javascript" src="js/build_tool.js"></script>
+		<script type="text/javascript" src="js/exit_screens.js"></script>
+		<script type="text/javascript" src="js/enter_screens.js"></script>
+		<script type="text/javascript" src="js/enter_tool.js"></script>
+
+		<script type="text/javascript">
+
+		document.getElementById("slider").style.visibility="hidden"; // hide slider for now
+
+			//waypoints scroll constructor
+			function scroll(n, offset, func1, func2){
+			  return new Waypoint({
+			    element: document.getElementById(n),
+			    handler: function(direction) {
+			       direction == 'down' ? func1() : func2();
+			    },
+			    offset: offset
+			  });
+			}; // end waypoints
+			// trigger these functions on scroll
+			new scroll('div3', 500, enter_screen3, enter_homescreen);
+			new scroll('div4', 500, enter_screen4, enter_screen3);
+			new scroll('div5', 500, enter_screen5, enter_screen4);
+			new scroll('div6', 500, enter_screen6, enter_screen5);
+			new scroll('div7', 500, enter_screen7, enter_screen6);
+			new scroll('div8', 500, enter_screen8, enter_screen7);
+			new scroll('div9', 500, enter_screen9, enter_screen8);
+			new scroll('div10', 500, enter_screen10, enter_screen9);
+			new scroll('div11', 500, enter_screen11, enter_screen10);
+			new scroll('div_last', 500, enter_tool, enter_screen11);
+
+		</script>
+
+</body>
+</html>
