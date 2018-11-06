@@ -149,12 +149,12 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 					.attr("y", pos_brandtext-30)
 					.attr("x", function(d) {
 						if (d.network=="msnbc") {
-							return margin.left_chyron+w_chyron/2;
-						}
-						else if (d.network=="cnn") {
-							return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
-						}
-						else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
+ 						 return margin.left_chyron+sq_spacing*5-(sq_padding/2);
+ 					 }
+ 					 else if (d.network=="cnn") {
+ 						 return margin.left_chyron+margin.btwn_chyron+(sq_spacing*15)-(sq_padding/2);
+ 					 }
+ 					 else { return margin.left_chyron+margin.btwn_chyron*2+(sq_spacing*25)-(sq_padding/2); }
 					})
 					.style("text-anchor", "middle")
 					.style("font-size", 16)

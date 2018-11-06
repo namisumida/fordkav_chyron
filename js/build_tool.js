@@ -24,7 +24,7 @@ var svg_tool = d3.select("#tool-svg")
 var screen_tool = svg_tool.append("g");
 
 // Import csv and create
-d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
+d3.csv("../Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 
   var dataset = data; // Once loaded, copy to dataset
 
@@ -121,17 +121,17 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
      						else { return "Fox News"; }
      				 })
      				 .attr("class", "brand_text")
-     				 .attr("y", pos_brandtext-30)
-     				 .attr("x", function(d) {
+     				 .attr("x", 90)
+     				 .attr("y", function(d) {
      					 if (d.network=="msnbc") {
-     							return margin.left_chyron+w_chyron/2;
+     							return 220;
      					 }
      					 else if (d.network=="cnn") {
-     							return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
+     							return 220+h_headlines+tool_margin.h_between;
      					 }
-     						else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
+     						else { return 220+h_headlines*2+tool_margin.h_between*2; }
      				 })
-     				 .style("text-anchor", "middle")
+     				 .style("text-anchor", "end")
      				 .style("font-size", 16)
      				 .style("font-weight", 700);
 
