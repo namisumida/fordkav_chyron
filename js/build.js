@@ -2,7 +2,7 @@
 // Define svg and margins
 var margin = {top:0, bottom:10, right:20, left:0, left_chyron2: 50, btwn_chyron: 30, left_chyron:55};
 var w_svg = 850;
-var h_svg = 800;
+var h_svg = 770;
 var top = 20;
 // Create svg
 var svg = d3.select("#scroll-svg")
@@ -117,7 +117,6 @@ var screen8 = svg.append("g");
 var screen9 = svg.append("g");
 var screen10 = svg.append("g");
 var screen11 = svg.append("g");
-var screen_tool = svg.append("g");
 
 d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 

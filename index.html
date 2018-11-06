@@ -43,7 +43,6 @@
 			<div class="scroll-graphic">
 				<div class="scroll-wrapper">
 					<svg id="scroll-svg" width="100%" height="100%"></svg>
-					<input id="slider" class="slider" type="range" min="0" max="8" step="1" value="0" orient="horizontal"></input>
 				</div>
 			</div>
 			<!-- scroll container -->
@@ -75,11 +74,15 @@
 				<div class='step' data-step='11'>
 					<div id="circle"></div>
 				</div>
-				<div class='step' data-step='12'>
-					<div id="circle"></div>
-				</div>
 			</div>
 
+		</section>
+
+		<section id="tool">
+			<div class="container-tool">
+					<svg id="tool-svg" width="100%" height="100%"></svg>
+					<input id="slider" class="slider" type="range" min="0" max="8" step="1" value="0" orient="horizontal"></input>
+			<div>
 		</section>
 
 		<script type="text/javascript" src="js/build.js"></script>
@@ -133,9 +136,6 @@
 				else if (response.index==8) {
 					enter_screen11();
 				}
-				else if (response.index==9) {
-					enter_tool();
-				}
 			}
 
 			function handleContainerEnter(response) {
@@ -169,7 +169,6 @@
 			    .onStepEnter(handleStepEnter)
 			    .onContainerEnter(handleContainerEnter)
 			    .onContainerExit(handleContainerExit);
-
 			}
 
 			// kick things off

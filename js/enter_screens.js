@@ -900,7 +900,7 @@ function enter_screen11() {
   screen_tool.transition()
           .duration(600)
           .ease(d3.easeLinear)
-          .attr("transform", "translate(0,-500)");
+          .attr("transform", "translate(0,-800)");
   document.getElementById("slider").style.visibility="hidden"; // hide slider for now
 
 
