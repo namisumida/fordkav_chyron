@@ -1,65 +1,6 @@
-// First screen - chyron examples
-function enter_screen1() {
-  // Move out of screen
-  screen1.selectAll(".intro_text")
-         .selectAll("tspan")
-         .attr("y", -500);
-
-  // move in intro text
-  screen1.select("#intro1")
-         .selectAll("tspan")
-         .transition()
-         .duration(600)
-         .ease(d3.easeLinear)
-         .attr("y", 12);
-
-  screen1.selectAll("#intro1_2")
-         .selectAll("tspan")
-         .transition()
-         .duration(600)
-         .ease(d3.easeLinear)
-         .attr("y", 300);
-
-  // move out screen 2 elements
-  exit_screen2();
-}; // end of enter_screen1
-
-// Second screen - Kavanaugh Ford intro
-function enter_screen2() {
-  // Remove screen 1 or 3 contents
-  exit_screen1();
+function enter_homescreen() {
   exit_screen3();
-
-  // Move in text
-  screen2.selectAll(".intro_text")
-         .selectAll("tspan")
-         .transition()
-         .duration(600)
-         .ease(d3.easeLinear)
-         .attr("y", 12);
-
-  // RECTANGLES for chyrons
-  screen2.selectAll(".chyron_rects")
-      .transition()
-      .duration(600)
-      .ease(d3.easeLinear)
-      .attr("y", pos_chyron-40);
-
-  // Intro brand text
-  screen2.selectAll(".brand_text")
-      .transition()
-      .duration(600)
-      .ease(d3.easeLinear)
-      .attr("y", pos_brandtext-40);
-
-  // Intro chyron text
-  screen2.selectAll(".chyron_text")
-     .selectAll("tspan")
-     .transition()
-     .duration(600)
-     .ease(d3.easeLinear)
-     .attr("y", pos_chyron);
-}; // End enter_screen2()
+}; // end enter home screen
 
 // Third screen - first grid
 function enter_screen3() {
@@ -70,7 +11,7 @@ function enter_screen3() {
          .transition()
          .duration(600)
          .ease(d3.easeLinear)
-         .attr("y", 12);
+         .attr("y", 20);
   screen3.selectAll(".brand_text")
          .transition()
          .duration(600)
@@ -122,7 +63,6 @@ function enter_screen3() {
          });
 
   // move out screen 2 elements
-  exit_screen2();
   exit_screen4();
 
 }; // End enter_screen3()
@@ -286,7 +226,7 @@ function enter_screen5() {
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
-				 .attr("y", 75);
+				 .attr("y", 110);
 
 	// Count text
 	screen5.selectAll(".count_text")
@@ -319,13 +259,13 @@ function enter_screen5() {
 					 screen5.append("rect")
 					 				.attr("id", "mouseover_rect")
 									.attr("x", function(d) {
-										if (network=="msnbc") {
-				 						 return btwn_spacing;
-				 					 }
-				 					 else if (network=="cnn") {
-				 						 return btwn_spacing*2+10*sq_spacing;
-				 					 }
-				 					 else { return (btwn_spacing*3+20*sq_spacing); }
+                    if (network=="msnbc") {
+        							return margin.left_chyron;
+        						}
+        						else if (network=="cnn") {
+        							return margin.left_chyron+margin.btwn_chyron+w_chyron;
+        						}
+        						else { return margin.left_chyron+margin.btwn_chyron*2+w_chyron*2; }
 									})
 									.attr("y", function(d) {
 										if (network=="msnbc") {
@@ -351,18 +291,18 @@ function enter_screen5() {
 							 		 .attr("id", "mouseover_text")
 									 .text(chyron)
 									 .attr("x", function(d) {
-										 if (network=="msnbc") {
-					 						 	return btwn_spacing + w_chyron/2;
-					 					 	}
-					 					 	else if (network=="cnn") {
-					 						 	return btwn_spacing*2+10*sq_spacing + w_chyron/2;
-					 					 	}
-					 					 	else { return (btwn_spacing*3+20*sq_spacing + w_chyron/2); }
+                     if (network=="msnbc") {
+         							return margin.left_chyron+w_chyron/2;
+         						 }
+         						 else if (network=="cnn") {
+         							 return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
+         						 }
+         						 else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
 									 })
 									 .attr("y", function() {
-											labelWidth = this.getComputedTextLength();
-												availWidth = w_chyron-10;
-												lines = Math.ceil(labelWidth/availWidth);
+										  labelWidth = this.getComputedTextLength();
+											availWidth = w_chyron-10;
+											lines = Math.ceil(labelWidth/availWidth);
 											if (network=="msnbc") {
 												if (lines <= 5) {
 													return pos_squaremouse+30;
@@ -425,7 +365,7 @@ function enter_screen6() {
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
-				 .attr("y", 12);
+				 .attr("y", 30);
 
 	// Description/labels
 	screen6.select("#kav_line")
@@ -475,12 +415,22 @@ function enter_screen7() {
 	screen3.selectAll(".chyron_back")
 				 .transition()
 				 .duration(400)
-				 .attr("y", 340)
+				 .attr("y", function(d) {
+           if (d.network=="msnbc") {
+						 return pos_belowcount;
+					 }
+					 else { return 340; }
+         })
 				 .style("fill", "none");
 	screen8.selectAll(".chyron_back8")
 				 .transition()
 				 .duration(400)
-				 .attr("y", 340)
+				 .attr("y", function(d) {
+					 if (d.network=="msnbc") {
+						 return pos_belowcount;
+					 }
+					 else { return pos_belowcount-80; }
+				 })
 				 .style("fill", "none");
 	screen8.selectAll(".count_text")
 				 .transition()
@@ -495,13 +445,13 @@ function enter_screen7() {
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
-				 .attr("y", 12);
+				 .attr("y", 20);
 	screen7.select("#intro7_2")
 				 .selectAll("tspan")
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
-				 .attr("y", 50);
+				 .attr("y", 73);
 
 	// Show %
 	screen7.selectAll(".count_text")
@@ -533,12 +483,12 @@ function enter_screen7() {
 					 				.attr("id", "mouseover_rect")
 									.attr("x", function(d) {
 										if (network=="msnbc") {
-				 						 return btwn_spacing;
-				 					 }
-				 					 else if (network=="cnn") {
-				 						 return btwn_spacing*2+10*sq_spacing;
-				 					 }
-				 					 else { return (btwn_spacing*3+20*sq_spacing); }
+				 						 return margin.left_chyron;
+				 					  }
+				 					  else if (network=="cnn") {
+				 						 return margin.left_chyron+margin.btwn_chyron+w_chyron;
+				 					  }
+				 					  else { return (margin.left_chyron+margin.btwn_chyron*2+w_chyron*2); }
 									})
 									.attr("y", function(d) {
 										if (network=="msnbc") {
@@ -564,26 +514,26 @@ function enter_screen7() {
 							 		 .attr("id", "mouseover_text")
 									 .text(chyron)
 									 .attr("x", function(d) {
-										 if (network=="msnbc") {
-					 						 	return btwn_spacing + w_chyron/2;
-					 					 	}
-					 					 	else if (network=="cnn") {
-					 						 	return btwn_spacing*2+10*sq_spacing + w_chyron/2;
-					 					 	}
-					 					 	else { return (btwn_spacing*3+20*sq_spacing + w_chyron/2); }
+                     if (network=="msnbc") {
+ 				 						  return margin.left_chyron+w_chyron/2;
+ 				 					   }
+ 				 					   else if (network=="cnn") {
+ 				 						  return margin.left_chyron+margin.btwn_chyron+w_chyron*3/2;
+ 				 					   }
+ 				 					   else { return (margin.left_chyron+margin.btwn_chyron*2+w_chyron*5/2); }
 									 })
 									 .attr("y", function() {
-										labelWidth = this.getComputedTextLength();
+										  labelWidth = this.getComputedTextLength();
 											availWidth = w_chyron-10;
 											lines = Math.ceil(labelWidth/availWidth);
-										if (network=="msnbc") {
-											if (lines <= 5) {
-												return pos_squaremouse+30;
-											}
-											else {
-												return pos_squaremouse+20;
-											}
-										}
+										  if (network=="msnbc") {
+											 if (lines <= 5) {
+												 return pos_squaremouse+30;
+											 }
+											 else {
+												 return pos_squaremouse+20;
+											 }
+										  }
 										else {
 											if (lines <= 5) {
 												return pos_squaremouse-80+30;
@@ -646,16 +596,26 @@ function enter_screen8() {
 				 .duration(600)
 				 .ease(d3.easeLinear)
 				 .attr("y", -500);
-	screen2.selectAll(".chyron_rects")
+	screen9.selectAll(".chyron_rect")
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
 				 .attr("y", -500);
 	screen3.selectAll(".brand_text")
+         .attr("y", -500)
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
-				 .attr("y", pos_brandtext-30);
+				 .attr("y", pos_brandtext-30)
+         .attr("x", function(d) {
+           if (d.network=="msnbc") {
+             return margin.left_chyron+w_chyron/2;
+           }
+           else if (d.network=="cnn") {
+             return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
+           }
+           else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
+         });
 	screen6.select("#kav_line") // label lines
 				 .transition()
 				 .duration(400)
@@ -683,7 +643,7 @@ function enter_screen8() {
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
-				 .attr("y", 12);
+				 .attr("y", 20);
 
 	// Opacity of rectangles
 	screen3.selectAll(".grid_rect")
@@ -781,10 +741,10 @@ function enter_screen9() {
 				 .duration(400)
 				 .style("fill", "none");
 	screen3.selectAll(".grid_rect")
-		 .transition()
-		 .duration(600)
-		 .ease(d3.easeLinear)
-		 .attr("y", -500);
+    		 .transition()
+    		 .duration(600)
+    		 .ease(d3.easeLinear)
+    		 .attr("y", -500);
 	screen8.selectAll("rect")
 				 .transition()
 				 .duration(600)
@@ -826,24 +786,35 @@ function enter_screen9() {
 
 	// Move brand text
 	screen3.selectAll(".brand_text")
-			.transition()
-			.duration(600)
-			.ease(d3.easeLinear)
-			.attr("y", pos_brandtext-30);
+          .attr("y", -500)
+    			.transition()
+    			.duration(600)
+    			.ease(d3.easeLinear)
+    			.attr("y", pos_brandtext-30)
+          .attr("x", function(d) {
+            if (d.network=="msnbc") {
+ 						 return margin.left_chyron2+w_chyron/2;
+ 					 }
+ 					 else if (d.network=="cnn") {
+ 						 return margin.left_chyron2*2+(w_chyron/2)*3;
+ 					 }
+ 					 else { return margin.left_chyron2*3+(w_chyron/2)*5; }
+          });
 
 	// Move chyron rects
-	screen2.selectAll(".chyron_rects")
+	screen9.selectAll(".chyron_rect")
+         .attr("y", -500)
 				 .transition()
-					 .duration(600)
-					 .ease(d3.easeLinear)
-					 .attr("y", pos_chyron-20);
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", pos_chyron-20);
 
 	screen9.selectAll(".chyron_text")
 				 .selectAll("tspan")
 				 .transition()
-					 .duration(600)
-					 .ease(d3.easeLinear)
-					 .attr("y", pos_chyron+20);
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", pos_chyron+20);
 
 } // end enter_screen9
 
@@ -852,23 +823,34 @@ function enter_screen10() {
 	screen9.selectAll("text")
 				 .selectAll("tspan")
 				 .transition()
-					 .duration(600)
-					 .ease(d3.easeLinear)
+				 .duration(600)
+				 .ease(d3.easeLinear)
 				 .attr("y", -500);
 
 	// Transition out of screen 11
 	// Move brand text
 	screen3.selectAll(".brand_text")
-			.transition()
-			.duration(600)
-			.ease(d3.easeLinear)
-			.attr("y", pos_brandtext-30);
+          .attr("y", -500)
+    			.transition()
+    			.duration(600)
+    			.ease(d3.easeLinear)
+    			.attr("y", pos_brandtext)
+          .attr("x", function(d) {
+            if (d.network=="msnbc") {
+ 						 return margin.left_chyron2+w_chyron/2;
+ 					 }
+ 					 else if (d.network=="cnn") {
+ 						 return margin.left_chyron2*2+(w_chyron/2)*3;
+ 					 }
+ 					 else { return margin.left_chyron2*3+(w_chyron/2)*5; }
+          });
 	// Move chyron rects
-	screen2.selectAll(".chyron_rects")
+	screen9.selectAll(".chyron_rect")
+         .attr("y", -500)
 				 .transition()
-					 .duration(600)
-					 .ease(d3.easeLinear)
-					 .attr("y", pos_chyron-20);
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", pos_chyron+10);
 	// Move out circles
 	exit_screen11();
 	screen11.selectAll(".description")
@@ -882,24 +864,30 @@ function enter_screen10() {
 					.style("stroke", "none");
 
 	// Move in intro text
-	screen10.selectAll(".intro_text")
+	screen10.select("#intro10_1")
 					.selectAll("tspan")
 					.transition()
 					.duration(600)
 					.ease(d3.easeLinear)
 					.attr("y", 12);
+  screen10.select("#intro10_2")
+					.selectAll("tspan")
+					.transition()
+					.duration(600)
+					.ease(d3.easeLinear)
+					.attr("y", 100);
 
 	// Move in new chyron text
 	screen10.selectAll(".chyron_text")
 				 .selectAll("tspan")
 				 .transition()
-					 .duration(600)
-					 .ease(d3.easeLinear)
+				 .duration(600)
+				 .ease(d3.easeLinear)
 				 .attr("y", function(d) {
 					 if (d.network=="msnbc") {
-						 return pos_chyron+20-15;
+						 return pos_chyron+30;
 					 }
-					 else { return pos_chyron+20-5; }
+					 else { return pos_chyron+35; }
 				 });
 } // end enter_screen10
 
@@ -909,15 +897,16 @@ function enter_screen11() {
           .duration(600)
           .ease(d3.easeLinear)
           .attr("transform", "translate(0,0)");
-
   screen_tool.transition()
           .duration(600)
           .ease(d3.easeLinear)
           .attr("transform", "translate(0,-500)");
+  document.getElementById("slider").style.visibility="hidden"; // hide slider for now
+
 
 	// Transition from screen 10
 	exit_screen10();
-	screen2.selectAll(".chyron_rects")
+	screen9.selectAll(".chyron_rect")
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
@@ -925,10 +914,20 @@ function enter_screen11() {
 
 	// Move brand text
 	screen3.selectAll(".brand_text")
-			.transition()
-			.duration(600)
-			.ease(d3.easeLinear)
-			.attr("y", pos_brandtext-40);
+         .attr("y", -500)
+  			 .transition()
+  			 .duration(600)
+  			 .ease(d3.easeLinear)
+  			 .attr("y", pos_brandtext-40)
+         .attr("x", function(d) {
+           if (d.network=="msnbc") {
+             return margin.left_chyron+w_chyron/2;
+           }
+           else if (d.network=="cnn") {
+             return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
+           }
+           else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
+         });
 
 	// Intro text
 	screen11.select("#intro11_1")
@@ -940,9 +939,9 @@ function enter_screen11() {
 	screen11.select("#intro11_2")
 					.selectAll("tspan")
 					.transition()
-					  .duration(600)
-					  .ease(d3.easeLinear)
-					  .attr("y", 60);
+					.duration(600)
+					.ease(d3.easeLinear)
+					.attr("y", 95);
 
 	// Grid circles
 	screen11.selectAll(".grid_circle")
@@ -1034,7 +1033,6 @@ screen11.select("#kav_descrip")
 				.duration(600)
 				.style("fill", "gray");
 
-
 // Mouseover
 screen11.selectAll(".grid_circle")
 				.filter(function(d) {
@@ -1045,13 +1043,13 @@ screen11.selectAll(".grid_circle")
 					screen11.append("rect")
 								 .attr("id", "chyron_rect")
 								 .attr("x", function() {
-									 if (network=="msnbc") {
-										return btwn_spacing;
-									}
-									else if (network=="cnn") {
-										return btwn_spacing*2+10*sq_spacing;
-									}
-									else { return (btwn_spacing*3+20*sq_spacing); }
+                  if (network=="msnbc") {
+       							return margin.left_chyron;
+       						}
+       						else if (network=="cnn") {
+       							return margin.left_chyron+margin.btwn_chyron+w_chyron;
+       						}
+       						else { return margin.left_chyron+margin.btwn_chyron*2+w_chyron*2; }
 								 })
 								 .attr("y", function() {
 									 if (network=="msnbc") {
@@ -1077,13 +1075,13 @@ screen11.selectAll(".grid_circle")
 									.attr("id", "chyron_text")
 									.text(chyron)
 									.attr("x", function() {
-										if (network=="msnbc") {
-										 return 20 + w_chyron/2;
-									 }
-									 else if (network=="cnn") {
-										 return 20*2+10*sq_spacing + w_chyron/2;
-									 }
-									 else { return (20*3+20*sq_spacing + w_chyron/2); }
+                    if (network=="msnbc") {
+        							return margin.left_chyron+w_chyron/2;
+        						}
+        						else if (network=="cnn") {
+        							return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
+        						}
+        						else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
 									})
 									.attr("y", function() {
 									 labelWidth = this.getComputedTextLength();

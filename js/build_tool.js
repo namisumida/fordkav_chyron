@@ -1,5 +1,5 @@
 // Tool margins
-var tool_margin = {top:0, bottom:10, right:20, left:20, w_between:50, h_between:10, intro_text:50};
+var tool_margin = {top:0, bottom:10, right:20, left:20, w_between:40, h_between:10, intro_text:50};
 var tool_timeline = 80; // height of timeline section
 var xScale, xScale_hour;
 var w_timeline = 470; // width of each line
@@ -7,6 +7,16 @@ var h_timeline = 80; // height of timeline section
 var w_headlines = (w_svg - (tool_margin.left+tool_margin.right) - tool_margin.w_between)/3 // width of headline section
 var h_headlines = (450 - h_timeline - tool_margin.bottom*3 - 2*tool_margin.h_between)/3 // height of EACH headline rect
 var chyrontext_size = 14;
+// Updated time:
+function time_to_string(time) {
+  var time_str = formatTime(time)
+  if (+time < +parseTime("9/28/18 12:00:00")) {
+    return time_str + " a.m.";
+  }
+  else {
+    return time_str.substr(1,time_str.length) + " p.m.";
+  }
+}
 
 // Import csv and create
 d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
@@ -17,12 +27,12 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
   screen_tool.append("text")
              .attr("id", "intro_tool")
              .attr("class", "intro_text")
-             .attr("x", 10)
-             .attr("y", 12)
+             .attr("x", (w_svg-600)/2)
+             .attr("y", 20)
              .text("Explore on your own! Use the slider to move throughout the day and click on each circle\
              to see the caption that was displayed, along with captions that were displayed by other networks\
              at a similar time.")
-             .call(wrap, w_svg)
+             .call(wrap, 600)
   screen_tool.selectAll(".intro_text")
              .selectAll("tspan")
              .attr("y", -500);
@@ -105,21 +115,11 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                       return d.network=="msnbc";
                     })[0];
   var display_list = [msnbc_display, cnn_display, fox_display];
-  // Updated time:
-  function time_to_string(time) {
-    var time_str = formatTime(time)
-    if (+time < +parseTime("9/28/18 12:00:00")) {
-      return time_str + " a.m.";
-    }
-    else {
-      return time_str.substr(1,time_str.length) + " p.m.";
-    }
-  }
 
   // HEADLINE SECTION
   var headline_section = screen_tool.append("g")
                                     .attr("class", "headline_section")
-                                    .attr("transform", "translate(" + (tool_margin.left+w_headlines*2+tool_margin.w_between) + ",-500)")
+                                    .attr("transform", "translate(" + (tool_margin.left+w_headlines*2+tool_margin.w_between+20) + ",-500)")
 
   // Rectangle of MSNBC
   var msnbc_rect = headline_section.append("rect")
@@ -154,35 +154,38 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                   .append("text")
                   .attr("class", "tool_chyrontext")
                   .text(function(d) {
-                    return d.chyron;
+                    if (d) {
+                      return d.chyron;
+                    }
+                    else { return ""; }
                   })
-                  .style("font-family", "sans-serif")
                   .style("font-size", function() {
-                    labelWidth = this.getComputedTextLength();
-                    availWidth = w_headlines-tool_margin.left-tool_margin.right;
-                    lines = Math.ceil(labelWidth/availWidth);
-                    if (lines <= 4) {
-                      return chyrontext_size;
-                    }
-                    else {
-                      return chyrontext_size - Math.ceil(lines/4) + "px";
-                    }
+                     labelWidth = this.getComputedTextLength();
+                     availWidth = w_headlines-tool_margin.left-tool_margin.right;
+                     lines = Math.ceil(labelWidth/availWidth);
+                     if (lines <= 4) {
+                       return chyrontext_size;
+                     }
+                     else if (lines<=6){
+                       return chyrontext_size-2;
+                     }
+                     else { return chyrontext_size-3}
                   })
-                  .attr("dy", "0.35em")
                   .attr("x", tool_margin.left+10)
                   .attr("y", function(d) {
-                    //var text_h = d3.select(this).node().getBBox().height;
-                    if (d.network=="msnbc") {
-                      return tool_margin.h_between*2
-                    }
-                    else if (d.network=="cnn") {
-                      return h_headlines + tool_margin.h_between*3
-                    }
-                    else if (d.network=="fox") {
-                      return h_headlines*2 + tool_margin.h_between*4
+                    if (d) {
+                      if (d.network=="msnbc") {
+                        return tool_margin.h_between*2
+                      }
+                      else if (d.network=="cnn") {
+                        return h_headlines + tool_margin.h_between*3
+                      }
+                      else if (d.network=="fox") {
+                        return h_headlines*2 + tool_margin.h_between*4
+                      }
                     }
                   })
-                  .call(wrap, w_headlines-tool_margin.left-tool_margin.right);
+                  .call(wrap, w_headlines-tool_margin.left*2);
 
   // updated time text
   headline_section.selectAll("tool_updatedtime")
@@ -400,13 +403,13 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                                 if (lines <= 4) {
                                   return chyrontext_size;
                                 }
-                                else {
-                                  return chyrontext_size - Math.ceil(lines/4) + "px";
+                                else if (lines<=6){
+                                  return chyrontext_size-2;
                                 }
+                                else { return chyrontext_size-3; }
                               })
                                .attr("x", tool_margin.left+10)
                                .attr("y", function(d) {
-                                 //var text_h = d3.select(this).node().getBBox().height;
                                  if (d) {
                                    if (d.network=="msnbc") {
                                      return tool_margin.h_between*2

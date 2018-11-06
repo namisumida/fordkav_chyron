@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Coverage of Kavanaugh Ford hearings</title>
+		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+		<style type="text/css">
+				.axis path
+				.axis line {
+					shape-rendering: crispEdges;
+				}
+				.axis text {
+					font-family: Optima, Futura, sans-sans-serif;
+					font-weight: bold;
+					font-size: 10px;
+				}
+
+				.slidecontainer {
+					width: 100%;
+				}
+
+				.slider {
+					-webkit-appearance: none;
+					appearance: none;
+					position: absolute;
+					height: 10px;
+					width: 475px;
+					background: rgb(173,173,173);
+					opacity: 0.8;
+					left: 120px;
+					top: 116px;
+					-webkit-transition: .2s;
+					transition: opacity .2s;
+				}
+
+				/* Mouse-over effects */
+				.slider:hover {
+					opacity: 1;
+				}
+
+				.slider::-webkit-slider-thumb {
+				    -webkit-appearance: none; /* Override default look */
+				    appearance: none;
+				    width: 53px; /* Set a specific slider handle width */
+				    height: 20px; /* Slider handle height */
+				    background: #4CAF50; /* Green background */
+				    cursor: pointer; /* Cursor on hover */
+				}
+
+				.slider::-moz-range-thumb {
+				    width: 53px; /* Set a specific slider handle width */
+				    height: 20px; /* Slider handle height */
+				    background: #4CAF50; /* Green background */
+				    cursor: pointer; /* Cursor on hover */
+				}
+
+		</style>
+	</head>
+	<body>
+		<input type="range" min="0" max="8" step="1" value="0" class="slider" orient="horizontal">
+		</input>
+
+		<script type="text/javascript">
+
+		// Set width, height, and other things about SVG
+		var margin = {top:0, bottom:10, right:20, left:20, w_between:50, h_between:10};
+		var w_svg = 900; // width of svg
+		var h_svg = 500; // height of svg
+		var h_title = 65; // height for title
+		var h_timeline = 80; // height of timeline section
+		var w_timeline = 470; // width of each line
+		var w_label = 80; // width of section with brand labels
+		var label_size = 12;
+
+		var w_headlines = (w_svg - (margin.left+margin.right) - margin.w_between)/3 // width of headline section
+		var h_headlines = (h_svg - h_title - h_timeline - margin.bottom*3 - 2*margin.h_between)/3 // height of EACH headline rect
+
+		var dataset, subset, current_value, start_time, end_time;
+
+
+		// Converting variable data types
+		var parseTime = d3.timeParse("%m/%d/%y %I:%M:%S"); // convert strings to Dates
+		var formatTime = d3.timeFormat("%I:%M"); // convert Dates to strings
+		var rowConverter = function(d) {
+			return {
+				time: parseTime("9/28/18 " + d.time),
+				chyron: d.chyron,
+				network: d.network
+			};
+		};
+
+		// Define color palette
+		var red = d3.rgb(212,89,84);
+		var blue = d3.rgb(20,151,252);
+		var yellow = d3.rgb(232,164,51);
+
+		var xScale, xScale_hour;
+
+		var chyrontext_size = 14;
+
+		// Text wrapping function
+		function wrap(text, width) {
+    	text.each(function () {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            x = text.attr("x"),
+            y = text.attr("y"),
+            dy = 0, //parseFloat(text.attr("dy")),
+            tspan = text.text(null)
+                        .append("tspan")
+                        .attr("x", x)
+                        .attr("y", y)
+                        .attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                            .text(word);
+            }
+        }
+    	});
+		}; // end wrap function
+
+		// Import dataset and run on data
+		d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
+
+			dataset = data; // Once loaded, copy to dataset
+
+			// Create time xScale
+			xScale = d3.scaleTime()
+									.domain([d3.min(dataset, function(d) { return d.time; }),
+										 			 d3.max(dataset, function(d) { return d.time; })])
+									.range([0, w_timeline]);
+
+			// Create svg
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("x", 0)
+						.attr("y", 0)
+						.attr("width", w_svg)
+						.attr("height", h_svg);
+
+			// Create a title in the header section
+			svg.append("text")
+				 .text("Kavanaugh-Ford hearings")
+				 .attr("x", margin.left)
+				 .attr("y", 20)
+				 .attr("font-size", 25)
+				 .attr("font-weight", "bold")
+				 .attr("font-family", "sans-serif");
+
+			 // Create a subheader
+			 svg.append("text")
+			 	 .attr("id", "subtitle")
+			 	 .attr("x", margin.left)
+			 	 .attr("y", margin.top+45)
+			 	 .text("Chyrons that were displayed by the three cable networks on Thursday, September 28, 2018, during the Senate hearings \
+				 of Christine Blasey Ford and Brett Kavanaugh. Use the slider to move throughout the day, and click on each circle to see the chyron/text. ")
+				 .call(wrap, w_svg)
+				 .attr("font-size", 12)
+			 	 .attr("font-family", "sans-serif");
+
+			// Create timeline section
+			var timeline_section = svg.append("g")
+				 												.attr("class", "timeline_section")
+																.attr("transform", "translate(0," + (margin.top+h_title+margin.h_between) + ")");
+
+			timeline_section.append("text")
+											.attr("id", "timeline_start")
+											.text("10:00 a.m.")
+											.attr("x", 80)
+			timeline_section.append("text")
+											.attr("id", "timeline_end")
+											.text("11:00 a.m.")
+											.attr("x", 155);
+			timeline_section.selectAll("text")
+											.attr("y", 20)
+											.style("fill", "gray")
+											.attr("font-size", 12)
+						 			 	 	.attr("font-family", "sans-serif");
+
+			// Key moments
+			// Ford's hearing
+			var ford_start = parseTime("9/28/18 10:03:00");
+			var ford_end = parseTime("9/28/18 14:18:00");
+			timeline_section.append("rect")
+											.attr("x", 120+xScale(ford_start))
+											.attr("width", xScale(ford_end)-xScale(ford_start))
+			timeline_section.append("text")
+											.attr("class", "timeline_moments_text")
+											.attr("x", xScale(ford_start)+120+(xScale(ford_end)-xScale(ford_start))/2)
+											.text("Christine Blasey Ford's testimony");
+
+			// Kavanaugh's hearing
+			var kav_start = parseTime("9/28/18 15:07:00");
+			var kav_end = parseTime("9/28/18 18:44:00");
+			timeline_section.append("rect")
+											.attr("x", 120+xScale(kav_start))
+											.attr("width", xScale(kav_end)-xScale(kav_start))
+			timeline_section.append("text")
+											.attr("class", "timeline_moments_text")
+											.attr("x", xScale(kav_start)+120+(xScale(kav_end)-xScale(kav_start))/2)
+											.text("Brett Kavanaugh's testimony")
+
+			// design elements - the text
+			timeline_section.selectAll(".timeline_moments_text")
+											.attr("y", h_timeline-15)
+											.style("font-size", 12)
+											.style("font-family", "sans-serif")
+											.style("text-anchor", "middle");
+			// design elements - the rects
+			timeline_section.selectAll("rect")
+											.attr("y", h_timeline-55)
+											.attr("height", 45)
+											.style("fill", "orange")
+											.style("opacity", 0.3)
+											.style("stroke", "none");
+
+			// Brands label section
+			var brand_labels = svg.append("g")
+														.attr("transform", "translate(" + margin.left + "," + (margin.top+h_title+h_timeline+margin.h_between*2) + ")")
+			brand_labels.append("text")
+									.attr("y", h_headlines/2+5)
+									.text("MSNBC")
+									.style("fill", yellow)
+			brand_labels.append("text")
+									.attr("y", h_headlines*1.5+margin.h_between+5)
+									.text("CNN")
+									.style("fill", red)
+			brand_labels.append("text")
+									.attr("y", h_headlines*2.5+margin.h_between*2+5)
+									.text("Fox News")
+									.style("fill", blue)
+			brand_labels.attr("x", margin.left)
+									.attr("font-size", "17")
+									.attr("font-weight", "bold")
+									.attr("fill", "black")
+									.attr("font-family", "sans-serif")
+									.attr("text-anchor", "start");
+
+			// Add brand logos
+	/*		brand_labels.append("svg:img")
+									.attr("xlink:href", "file:///Users/namisumida/Documents/d3/KavanaughFord/Logos/cnn_logo.svg")
+									.attr("x", margin.left)
+									.attr("y", h_headlines/2+5)
+									.attr("width", 30)
+									.attr("height", 30);*/
+
+			// Default settings
+			current_value = parseInt(d3.select(".slider").node().value);
+			start_time = parseTime("9/28/18 " + (10+current_value) + ":00:00");
+			end_time = parseTime("9/28/18 " + (11+current_value) + ":00:00");
+			xScale_hour = d3.scaleTime()
+									.domain([start_time, end_time])
+									.range([0, w_timeline]);
+			// define subset of data based on time interval
+			subset = dataset.filter(function(d) {
+											return (d.chyron!="" & +start_time<=+d.time & +d.time<+end_time);
+										});
+
+			// pick out the objects that will be displayed
+			var cnn_display = subset.filter(function(d) {
+													return d.network=="cnn";
+												})[0];
+			var fox_display = subset.filter(function(d) {
+													return d.network=="fox";
+												})[0];
+			var msnbc_display = subset.filter(function(d) {
+													return d.network=="msnbc";
+												})[0];
+			var display_list = [msnbc_display, cnn_display, fox_display];
+			// Updated time:
+			function time_to_string(time) {
+				var time_str = formatTime(time)
+				if (+time < +parseTime("9/28/18 12:00:00")) {
+					return time_str + " a.m.";
+				}
+				else {
+					return time_str.substr(1,time_str.length) + " p.m.";
+				}
+			}
+
+			// HEADLINE SECTION
+			var headline_section = svg.append("g")
+												.attr("class", "headline_section")
+												.attr("transform", "translate(" + (margin.left+w_headlines*2+margin.w_between) + "," + (margin.top+h_title+h_timeline+margin.h_between*2) + ")")
+
+			// Rectangle of MSNBC
+			var msnbc_rect = headline_section.append("rect")
+											.attr("class", "headline_rect")
+											.attr("y", 0)
+											.style("stroke", yellow);
+
+			// Rectangle for CNN
+			var cnn_rect = headline_section.append("rect")
+											.attr("class", "headline_rect")
+											.attr("y", h_headlines+margin.h_between)
+											.style("stroke", red);
+
+			// Rectangle for Fox
+			var fox_rect = headline_section.append("rect")
+											.attr("class", "headline_rect")
+											.attr("y", h_headlines*2+margin.h_between*2)
+											.style("stroke", blue);
+
+			// Desigining rectangles
+			svg.selectAll(".headline_rect")
+				 .attr("x", margin.left)
+				 .attr("height", h_headlines)
+				 .attr("width", w_headlines-margin.right)
+				 .style("fill", "none");
+
+			// HEADLINE text - starts with very first chyron
+			// Updated chyron
+			headline_section.selectAll("chyron_text")
+											.data(display_list)
+											.enter()
+											.append("text")
+											.attr("class", "chyron_text")
+											.text(function(d) {
+												return d.chyron;
+											})
+											.style("font-family", "sans-serif")
+											.style("font-size", function() {
+												labelWidth = this.getComputedTextLength();
+												availWidth = w_headlines-margin.left-margin.right;
+												lines = Math.ceil(labelWidth/availWidth);
+												if (lines <= 4) {
+													return chyrontext_size;
+												}
+												else {
+													return chyrontext_size - Math.ceil(lines/4) + "px";
+												}
+											})
+											.attr("dy", "0.35em")
+											.attr("x", margin.left+10)
+											.attr("y", function(d) {
+												//var text_h = d3.select(this).node().getBBox().height;
+												if (d.network=="msnbc") {
+													return margin.h_between*2
+												}
+												else if (d.network=="cnn") {
+													return h_headlines + margin.h_between*3
+												}
+												else if (d.network=="fox") {
+													return h_headlines*2 + margin.h_between*4
+												}
+											})
+											.call(wrap, w_headlines-margin.left-margin.right);
+
+			// updated time text
+			headline_section.selectAll("updatetime_text")
+											.data(display_list)
+											.enter()
+											.append("text")
+											.attr("class", "updatetime_text")
+											.attr("y", function(d) {
+												if (d.network=="msnbc") {
+													return h_headlines-2;
+												}
+												else if (d.network=="cnn") {
+													return h_headlines*2+margin.h_between-2;
+												}
+												else {
+													return h_headlines*3+margin.h_between*2-2;
+												}
+											})
+											.text(function(d) {
+												return "Updated: " + time_to_string(d.time);
+											})
+											.attr("x", w_headlines-2)
+											.style("fill", "gray")
+											.style("font-family", "sans-serif")
+											.style("font-size", 11)
+											.style("text-anchor", "end");
+
+			// DOT PLOT SECTION
+			// Lines
+			var dot_section = svg.append("g")
+										 .attr("transform", "translate(" + 120 + "," + (margin.top+h_title+h_timeline+margin.h_between*2) + ")");
+
+			// CNN line
+			dot_section.append("line")
+					 .attr("id", "msnbc_line")
+					 .attr("x1", 0)
+					 .attr("x2", w_timeline)
+					 .attr("y1", h_headlines/2)
+					 .attr("y2", h_headlines/2);
+
+			// Fox line
+ 			dot_section.append("line")
+					 .attr("id", "cnn_line")
+					 .attr("x1", 0)
+					 .attr("x2", w_timeline)
+					 .attr("y1", h_headlines*1.5+margin.h_between)
+ 					 .attr("y2", h_headlines*1.5+margin.h_between);
+
+			// MSNBC line
+			dot_section.append("line")
+			 		 .attr("id", "fox_line")
+					 .attr("x1", 0)
+					 .attr("x2", w_timeline)
+					 .attr("y1", h_headlines*2.5+margin.h_between*2)
+			 		 .attr("y2", h_headlines*2.5+margin.h_between*2);
+
+			dot_section.selectAll("line")
+					 .style("stroke", d3.rgb(83,83,83))
+					 .style("stroke-width", "13px")
+					 .attr("opacity", 0.3); //styles that affect all lines
+
+			// Time labels
+			dot_section.append("text")
+								 .attr("id", "dot_start")
+								 .text("10:00 a.m.")
+								 .attr("x", 0)
+								 .attr("y", h_headlines/2-20)
+								 .style("text-anchor", "start")
+								 .style("font-family", "sans-serif")
+								 .style("font-size", "12px")
+								 .style("font-weight", "bold")
+								 .style("fill", "gray")
+			dot_section.append("text")
+								 .attr("id", "dot_end")
+								 .text("11:00 a.m.")
+								 .attr("x", w_timeline)
+								 .attr("y", h_headlines/2-20)
+								 .style("text-anchor", "end")
+								 .style("font-family", "sans-serif")
+								 .style("font-size", "12px")
+								 .style("font-weight", "bold")
+								 .style("fill", "gray")
+
+			// Dots
+			// add outer circles for those that are highlighted / have chyrons displayed
+			dot_section.selectAll("outer_circles")
+								 .data(display_list)
+								 .enter()
+								 .append("circle")
+								 .attr("class", "outer_circles")
+								 .attr("cx", function(d) {
+									 return xScale_hour(d.time);
+								 })
+								 .attr("cy", function(d) {
+									 if (d.network=="msnbc") {
+										 return h_headlines/2;
+									 }
+									 else if (d.network=="cnn") {
+										 return h_headlines*1.5+margin.h_between;
+									 }
+									 else if (d.network=="fox") {
+										 return h_headlines*2.5+margin.h_between*2;
+									 }
+								 })
+								 .attr("r", 10)
+								 .style("fill", "none")
+								 .style("stroke", function(d) {
+									 if (d.network=="msnbc") {
+										 return yellow;
+									 }
+									 else if (d.network=="cnn") {
+										 return red;
+									 }
+									 else if (d.network=="fox") {
+										 return blue;
+									 }
+								 })
+								 .style("stroke-width", 2)
+
+			// Create circles
+			dot_section.selectAll("main_circles")
+								 .data(subset)
+								 .enter()
+								 .append("circle")
+								 .attr("class", "main_circles")
+								 .attr("cx", function(d) {
+									 return xScale_hour(d.time);
+								 })
+								 .attr("r", 7)
+								 .style("opacity", function(d) {
+									 if (display_list.indexOf(d)>=0) { // if it's a displayed circle, then not opaque
+										 return 1;
+									 }
+									 else { return 0.5; }
+								 })
+								 .attr("cy", function(d) {
+									 if (d.network=="msnbc") {
+										 return h_headlines/2;
+									 }
+									 else if (d.network=="cnn") {
+										 return h_headlines*1.5+margin.h_between;
+									 }
+									 else if (d.network=="fox") {
+										 return h_headlines*2.5+margin.h_between*2;
+									 }
+								 })
+								 .style("fill", function(d) {
+									 if (d.network=="msnbc") {
+										 return yellow;
+									 }
+									 else if (d.network=="cnn") {
+										 return red;
+									 }
+									 else if (d.network=="fox") {
+										 return blue;
+									 }
+								 })
+								 // interactivity
+								 .on("click", function(d) {
+									 var circle_selection = d3.select(this);
+									 var time_selection = d3.select(this).data()[0].time;
+
+									 // create a sub subset with data points that are between the smallest time and the time selected
+									 var subset_selection = subset.filter(function(d) {
+										 return (+start_time<=+d.time & +d.time<=+time_selection);
+									 })
+
+									 // re-pick out the objects that will be displayed
+									 var cnn_time = d3.max(subset_selection.filter(function(d) {
+																		return d.network=="cnn";
+																	}), function(d) {
+																		return d.time;
+																	});
+									 var fox_time = d3.max(subset_selection.filter(function(d) {
+																		return d.network=="fox";
+																	}), function(d) {
+																		return d.time;
+																	});
+									 var msnbc_time = d3.max(subset_selection.filter(function(d) {
+																		return d.network=="msnbc";
+																	}), function(d) {
+																		return d.time;
+																	});
+
+									 // define a function for finding index
+									 function findIndex(array, attr, value, attr2, value2) {
+									    for(var i = 0; i < array.length; i += 1) {
+									        if (array[i][attr] === value & array[i][attr2] === value2) {
+									            return i;
+									        }
+									    }
+									    return -1;
+										}
+
+									 // defining objects
+					 				 cnn_display = subset[findIndex(subset, "time", cnn_time, "network", "cnn")]
+									 fox_display = subset[findIndex(subset, "time", fox_time, "network", "fox")]
+									 msnbc_display = subset[findIndex(subset, "time", msnbc_time, "network", "msnbc")]
+					 				 display_list = [msnbc_display, cnn_display, fox_display];
+
+									 // update chyron text
+									 headline_section.selectAll(".chyron_text")
+						 											 .data(display_list)
+						 											 .text(function(d) {
+						 											 	 if (d) {
+																			 return d.chyron;
+																		 }
+																		 else { return ""; }
+						 											 })
+																	 .style("font-size", function() {
+						 												labelWidth = this.getComputedTextLength();
+						 												availWidth = w_headlines-margin.left-margin.right;
+						 												lines = Math.ceil(labelWidth/availWidth);
+																		if (lines <= 4) {
+																			return chyrontext_size;
+																		}
+																		else {
+																			return chyrontext_size - Math.ceil(lines/4) + "px";
+																		}
+						 											})
+																	 .attr("x", margin.left+10)
+																	 .attr("y", function(d) {
+																		 //var text_h = d3.select(this).node().getBBox().height;
+																		 if (d) {
+																			 if (d.network=="msnbc") {
+																				 return margin.h_between*2
+																			 }
+																			 else if (d.network=="cnn") {
+																				 return h_headlines + margin.h_between*3
+																			 }
+																			 else if (d.network=="fox") {
+																				 return h_headlines*2 + margin.h_between*4
+																			 }
+																		 }
+																	 })
+																	 .call(wrap, w_headlines-margin.left*2)
+
+										// updated time text
+										headline_section.selectAll(".updatetime_text")
+																		.data(display_list)
+																		.text(function(d) {
+																			if (d) {
+																				return "Updated: " + time_to_string(d.time);
+																			}
+																			else { return ""; }
+																		})
+																		.attr("y", function(d) {
+																			if (d) {
+																				if (d.network=="msnbc") {
+																					return h_headlines-2;
+																				}
+																				else if (d.network=="cnn") {
+																					return h_headlines*2+margin.h_between-2;
+																				}
+																				else {
+																					return h_headlines*3+margin.h_between*2-2;
+																				}
+																			}
+																		})
+																		.attr("x", w_headlines-2);
+										dot_section.selectAll(".main_circles")
+															 .style("opacity", function(d) {
+																 if (display_list.indexOf(d)>=0) { // if it's a displayed circle, then not opaque
+																	 return 1;
+																 }
+																 else { return 0.5; }
+															 })
+										dot_section.selectAll(".outer_circles")
+															 .data(display_list)
+															 .attr("cx", function(d) {
+																 if (d) {
+																	 return xScale_hour(d.time);
+																 }
+															 })
+															 .style("stroke-width", function(d) {
+																 if (d) {
+																	 return 2;
+																 }
+																 else { return 0; }
+															 })
+								 }); // end on click interaction
+
+			// INTERACTIVITY
+			// When time changes...
+			d3.selectAll(".slider")
+				.on("change", function() {
+					current_value = parseInt(d3.select(this).node().value);
+					var start_int = 10+current_value;
+
+					// Default settings
+					start_time = parseTime("9/28/18 " + (10+current_value) + ":00:00");
+					end_time = parseTime("9/28/18 " + (11+current_value) + ":00:00");
+					xScale_hour = d3.scaleTime()
+											.domain([start_time, end_time])
+											.range([0, w_timeline]);
+					// define subset of data based on time interval
+					subset = dataset.filter(function(d) {
+													return (d.chyron!="" & +start_time<=+d.time & +d.time<+end_time);
+												});
+					// pick out the objects that will be displayed
+					cnn_display = subset.filter(function(d) {
+															return d.network=="cnn";
+														})[0];
+					fox_display = subset.filter(function(d) {
+															return d.network=="fox";
+														})[0];
+					msnbc_display = subset.filter(function(d) {
+															return d.network=="msnbc";
+														})[0];
+					display_list = [msnbc_display, cnn_display, fox_display];
+
+					// change labels on timeline
+					d3.select("#timeline_start")
+						.text(function() {
+							if (start_int > 12) {
+								return (start_int-12) + ":00 p.m."
+							}
+							else if (start_int == 12) {
+								return (start_int) + ":00 p.m."
+							}
+							else {
+								return (start_int) + ":00 a.m."
+							}
+						})
+						.attr("x", function() {
+							return 80+(53*current_value);
+						}); // end timeline_start label
+
+					d3.select("#timeline_end")
+						.text(function() {
+							if (start_int+1 > 12) {
+								return (start_int-12+1) + ":00 p.m."
+							}
+							else if (start_int+1 == 12) {
+								return (start_int+1) + ":00 p.m."
+							}
+							else {
+								return (start_int+1) + ":00 a.m."
+							}
+						})
+						.attr("x", function() {
+							return 580-(53*(8-current_value));
+						}); // end timeline_end label
+
+					// change labels on timelines in dot section
+					d3.select("#dot_start")
+						.text(function() {
+							if (start_int > 12) {
+								return (start_int-12) + ":00 p.m."
+							}
+							else if (start_int == 12) {
+								return (start_int) + ":00 p.m."
+							}
+							else {
+								return (start_int) + ":00 a.m."
+							}
+						}); // end label
+					d3.select("#dot_end")
+						.text(function() {
+							if (start_int+1 > 12) {
+								return (start_int-12+1) + ":00 p.m."
+							}
+							else if (start_int+1 == 12) {
+								return (start_int+1) + ":00 p.m."
+							}
+							else {
+								return (start_int+1) + ":00 a.m."
+							}
+						}); // end label
+
+					// Update chyron text
+					headline_section.selectAll(".chyron_text")
+													.data(display_list)
+													.text(function(d) {
+														return d.chyron;
+													})
+													.style("font-size", function() {
+														labelWidth = this.getComputedTextLength();
+														availWidth = w_headlines-margin.left-margin.right;
+														lines = Math.ceil(labelWidth/availWidth);
+														if (lines <= 4) {
+															return chyrontext_size;
+														}
+														else {
+															return chyrontext_size - Math.ceil(lines/4) + "px";
+														}
+													})
+													.attr("x", margin.left+10)
+													.attr("y", function(d) {
+														if (d.network=="msnbc") {
+															return margin.h_between*2
+														}
+														else if (d.network=="cnn") {
+															return h_headlines + margin.h_between*3
+														}
+														else if (d.network=="fox") {
+															return h_headlines*2 + margin.h_between*4
+														}
+													})
+													.call(wrap, w_headlines-margin.left*2);
+					// updated time text
+					headline_section.selectAll(".updatetime_text")
+													.data(display_list)
+													.attr("y", function(d) {
+														if (d.network=="msnbc") {
+															return h_headlines-2;
+														}
+														else if (d.network=="cnn") {
+															return h_headlines*2+margin.h_between-2;
+														}
+														else {
+															return h_headlines*3+margin.h_between*2-2;
+														}
+													})
+													.text(function(d) {
+														return "Updated: " + time_to_string(d.time);
+													})
+													.attr("x", w_headlines-2);
+
+					// Change circles
+					// Updated time:
+
+					var maincircles_update = dot_section.selectAll(".main_circles")
+															 							  .data(subset); // update selection
+					maincircles_update.exit().remove(); // remove unneeded circles
+					maincircles_update.enter() // add any additional circles needed
+											.append("circle")
+											.attr("class", "main_circles")
+											.attr("r", 7)
+											.attr("cx", function(d) {
+												return xScale_hour(d.time);
+											})
+											.attr("cy", function(d) {
+												if (d.network=="msnbc") {
+		 										 return h_headlines/2;
+		 									 }
+		 									 else if (d.network=="cnn") {
+		 										 return h_headlines*1.5+margin.h_between;
+		 									 }
+		 									 else if (d.network=="fox") {
+		 										 return h_headlines*2.5+margin.h_between*2;
+		 									 }
+											})
+
+					dot_section.selectAll(".main_circles")
+											.attr("cx", function(d) {
+												return xScale_hour(d.time);
+											})
+											.attr("cy", function(d) {
+												if (d.network=="msnbc") {
+		 										 return h_headlines/2;
+		 									 }
+		 									 else if (d.network=="cnn") {
+		 										 return h_headlines*1.5+margin.h_between;
+		 									 }
+		 									 else if (d.network=="fox") {
+		 										 return h_headlines*2.5+margin.h_between*2;
+		 									 }
+											})
+											.attr("r", 7)
+											.style("fill", function(d) {
+		 									 if (d.network=="msnbc") {
+		 										 return yellow;
+		 									 }
+		 									 else if (d.network=="cnn") {
+		 										 return red;
+		 									 }
+		 									 else if (d.network=="fox") {
+		 										 return blue;
+		 									 }
+		 								 })
+										 .style("opacity", function(d) {
+											 if (display_list.indexOf(d)>=0) { // if it's a displayed circle, then not opaque
+												 return 1;
+											 }
+											 else { return 0.5; }
+										 })
+										 .on("click", function(d) {
+											 var circle_selection = d3.select(this);
+											 var time_selection = d3.select(this).data()[0].time;
+
+											 // create a sub subset with data points that are between the smallest time and the time selected
+											 var subset_selection = subset.filter(function(d) {
+												 return (+start_time<=+d.time & +d.time<=+time_selection);
+											 })
+
+											 // re-pick out the objects that will be displayed
+											 var cnn_time = d3.max(subset_selection.filter(function(d) {
+																				return d.network=="cnn";
+																			}), function(d) {
+																				return d.time;
+																			});
+											 var fox_time = d3.max(subset_selection.filter(function(d) {
+																				return d.network=="fox";
+																			}), function(d) {
+																				return d.time;
+																			});
+											 var msnbc_time = d3.max(subset_selection.filter(function(d) {
+																				return d.network=="msnbc";
+																			}), function(d) {
+																				return d.time;
+																			});
+
+											 // define a function for finding index
+											 function findIndex(array, attr, value, attr2, value2) {
+											    for(var i = 0; i < array.length; i += 1) {
+											        if (array[i][attr] === value & array[i][attr2] === value2) {
+											            return i;
+											        }
+											    }
+											    return -1;
+												}
+
+											 // defining objects
+							 				 cnn_display = subset[findIndex(subset, "time", cnn_time, "network", "cnn")]
+											 fox_display = subset[findIndex(subset, "time", fox_time, "network", "fox")]
+											 msnbc_display = subset[findIndex(subset, "time", msnbc_time, "network", "msnbc")]
+							 				 display_list = [msnbc_display, cnn_display, fox_display];
+
+											 // update chyron text
+											 headline_section.selectAll(".chyron_text")
+								 											 .data(display_list)
+								 											 .text(function(d) {
+								 											 	 if (d) {
+																					 return d.chyron;
+																				 }
+																				 else { return ""; }
+								 											 })
+																			 .style("font-size", function() {
+								 												labelWidth = this.getComputedTextLength();
+								 												availWidth = w_headlines-margin.left-margin.right;
+								 												lines = Math.ceil(labelWidth/availWidth);
+																				if (lines <= 4) {
+																					return chyrontext_size;
+																				}
+																				else {
+																					return chyrontext_size - Math.ceil(lines/4) + "px";
+																				}
+								 											})
+																			 .attr("x", margin.left+10)
+																			 .attr("y", function(d) {
+																				 //var text_h = d3.select(this).node().getBBox().height;
+																				 if (d) {
+																					 if (d.network=="msnbc") {
+																						 return margin.h_between*2
+																					 }
+																					 else if (d.network=="cnn") {
+																						 return h_headlines + margin.h_between*3
+																					 }
+																					 else if (d.network=="fox") {
+																						 return h_headlines*2 + margin.h_between*4
+																					 }
+																				 }
+																			 })
+																			 .call(wrap, w_headlines-margin.left*2);
+
+												// updated time text
+												headline_section.selectAll(".updatetime_text")
+																				.data(display_list)
+																				.text(function(d) {
+																					if (d) {
+																						return "Updated: " + time_to_string(d.time);
+																					}
+																					else { return ""; }
+																				})
+																				.attr("y", function(d) {
+																					if (d) {
+																						if (d.network=="msnbc") {
+																							return h_headlines-2;
+																						}
+																						else if (d.network=="cnn") {
+																							return h_headlines*2+margin.h_between-2;
+																						}
+																						else {
+																							return h_headlines*3+margin.h_between*2-2;
+																						}
+																					}
+																				})
+																				.attr("x", w_headlines-2);
+												dot_section.selectAll(".main_circles")
+																	 .style("opacity", function(d) {
+																		 if (display_list.indexOf(d)>=0) { // if it's a displayed circle, then not opaque
+																			 return 1;
+																		 }
+																		 else { return 0.5; }
+																	 })
+												dot_section.selectAll(".outer_circles")
+																	 .data(display_list)
+																	 .attr("cx", function(d) {
+																		 if (d) {
+																			 return xScale_hour(d.time);
+																		 }
+																	 })
+																	 .style("stroke-width", function(d) {
+																		 if (d) {
+																			 return 2;
+																		 }
+																		 else { return 0; }
+																	 })
+										 }); // end on click interaction
+
+					// update outer circles
+					dot_section.selectAll(".outer_circles")
+										 .data(display_list)
+										 .attr("cx", function(d) {
+												 return xScale_hour(d.time)
+										 })
+										 .style("stroke-width", 2);
+
+				}); // end INTERACTIVITY
+
+
+
+		});
+
+
+    </script>
+	</body>
+</html>

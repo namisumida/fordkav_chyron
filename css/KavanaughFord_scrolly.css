@@ -56,35 +56,119 @@ html, body{
 .body-container-rect {
   width: 800px;
   position: relative;
-  top: 300px;
+  top: 200px;
   margin: 0 auto;
 }
 #msnbc_rect {
-  position: relative;
+  position: absolute;
   x: 30px;
+  y: 50px;
   fill:rgb(232,164,51);
 }
 #cnn_rect {
-  position: relative;
+  position: absolute;
   x: 290px;
+  y: 50px;
   fill: rgb(212,89,84);
 }
 #fox_rect {
+  position: absolute;
   x: 550px;
+  y: 50px;
   fill: rgb(20,151,252);
 }
 
+.body-container-brandtext {
+  position: absolute;
+}
+.brand-text {
+  font-size: 16px;
+  font-weight: 700;
+}
+#brand-text-msnbc {
+  position: absolute;
+  text-align: center;
+  left: 30px;
+  width: 220px;
+}
+#brand-text-cnn {
+  position: absolute;
+  text-align: center;
+  left: 290px;
+  width: 220px;
+}
+#brand-text-fox {
+  position: absolute;
+  text-align: center;
+  left: 550px;
+  width: 220px;
+}
+
+.chyron-text-first {
+  font-size: 14px;
+  font-weight: 600;
+}
+#chyron-text-msnbc {
+  position: absolute;
+  text-align: center;
+  top: 70px;
+  left: 30px;
+  width: 220px;
+}
+#chyron-text-cnn {
+  position: absolute;
+  text-align: center;
+  top: 70px;
+  left: 290px;
+  width: 220px;
+}
+#chyron-text-fox {
+  position: absolute;
+  text-align: center;
+  top: 70px;
+  left: 550px;
+  width: 220px;
+}
 svg {
   padding: 5px;
 }
-#graphic {
-  max-width: 1000px;
+
+#scroll {
+  max-width: 850px;
   width: 100%;
-  position: relative;
   height: 100%;
   position: relative;
-  margin: auto;
+  margin: 0 auto;
   line-height: 1.4;
+  top: 250px;
+}
+.scroll-graphic {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  bottom: auto;
+  width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.scroll-graphic.is-fixed {
+  position: fixed;
+  left: 0px;
+  top: 15px;
+  margin: 0 auto;
+}
+.scroll-graphic.is-bottom {
+  bottom: 0;
+  top: auto;
+}
+.scroll-graphic .scroll-svg {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .container {
   height: 100%;
@@ -92,9 +176,9 @@ svg {
   margin: 0;
   padding: 0;
   position: absolute;
-  top: -20px;
-  left: 1000px;
+  top:50px;
 }
+
 .container div {
   height: 100%;
   display: block;
@@ -105,15 +189,10 @@ svg {
   border-radius: 25px;
   background: black;
 }
-.fixed {
-  position: fixed;
-  width: 1000px;
-  max-height: 1000px;
-  top: 50px;
-}
 .intro_text {
   font-weight: 200;
-  font-size: 14px;
+  font-size: 15px;
+  text-anchor: start;
 }
 .count_text {
   text-anchor: middle;
@@ -124,6 +203,9 @@ svg {
   text-anchor: middle;
   font-size: 14px;
   font-weight: 600;
+}
+.description {
+  font-size: 11px;
 }
 .tool_chyrontext {
   font-weight: 400;
@@ -149,7 +231,7 @@ svg {
   background: rgb(173,173,173);
   opacity: 0.8;
   left: 120px;
-  top: 88px;
+  top: 120px;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
