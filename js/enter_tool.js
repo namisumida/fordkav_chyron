@@ -168,13 +168,13 @@ function enter_tool() {
                       labelWidth = this.getComputedTextLength();
                       availWidth = w_headlines-tool_margin.left-tool_margin.right;
                       lines = Math.ceil(labelWidth/availWidth);
-                      if (lines <= 4) {
+                      if (lines <= 3) {
                         return chyrontext_size;
                       }
-                      else if (lines<=6){
-                        return chyrontext_size-2;
+                      else if (lines <= 5 ) {
+                        return chyrontext_size-(lines-3);
                       }
-                      else { return chyrontext_size-3; }
+                      else { return 11; }
                     })
                     .attr("x", tool_margin.left+10)
                     .attr("y", function(d) {
@@ -325,13 +325,13 @@ function enter_tool() {
                                     labelWidth = this.getComputedTextLength();
                                     availWidth = w_headlines-tool_margin.left-tool_margin.right;
                                     lines = Math.ceil(labelWidth/availWidth);
-                                    if (lines <= 4) {
+                                    if (lines <= 3) {
                                       return chyrontext_size;
                                     }
-                                    else if (lines<=6){
-                                      return chyrontext_size-2;
+                                    else if (lines <= 5 ) {
+                                      return chyrontext_size-(lines-3);
                                     }
-                                    else { return chyrontext_size-3}
+                                    else { return 11; }
                                  })
                                  .attr("x", tool_margin.left+10)
                                  .attr("y", function(d) {
@@ -351,7 +351,7 @@ function enter_tool() {
 
                       // updated time text
                       screen_tool.select(".headline_section")
-                                 .selectAll(".updatetime_text")
+                                 .selectAll(".tool_updatedtime")
                                   .data(display_list)
                                   .text(function(d) {
                                     if (d) {

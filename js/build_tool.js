@@ -163,13 +163,13 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                      labelWidth = this.getComputedTextLength();
                      availWidth = w_headlines-tool_margin.left-tool_margin.right;
                      lines = Math.ceil(labelWidth/availWidth);
-                     if (lines <= 4) {
+                     if (lines <= 3) {
                        return chyrontext_size;
                      }
-                     else if (lines<=6){
-                       return chyrontext_size-2;
+                     else if (lines <= 5 ) {
+                       return chyrontext_size-(lines-3);
                      }
-                     else { return chyrontext_size-3}
+                     else { return 11; }
                   })
                   .attr("x", tool_margin.left+10)
                   .attr("y", function(d) {
@@ -400,13 +400,13 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                                 labelWidth = this.getComputedTextLength();
                                 availWidth = w_headlines-tool_margin.left-tool_margin.right;
                                 lines = Math.ceil(labelWidth/availWidth);
-                                if (lines <= 4) {
+                                if (lines <= 3) {
                                   return chyrontext_size;
                                 }
-                                else if (lines<=6){
-                                  return chyrontext_size-2;
+                                else if (lines <= 5 ) {
+                                  return chyrontext_size-(lines-3);
                                 }
-                                else { return chyrontext_size-3; }
+                                else { return 11; }
                               })
                                .attr("x", tool_margin.left+10)
                                .attr("y", function(d) {
@@ -422,7 +422,7 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                                    }
                                  }
                                })
-                               .call(wrap, w_headlines-margin.left*2)
+                               .call(wrap, w_headlines-tool_margin.left*2)
 
                 // updated time text
                 headline_section.selectAll(".tool_updatedtime")

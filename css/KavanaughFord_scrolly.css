@@ -143,9 +143,10 @@ svg {
   top: 250px;
 }
 .scroll-graphic {
-  position: absolute;
+  position: relative;
+  max-width: 850px;
   top: 15px;
-  left: 0;
+  left: 50%;
   bottom: auto;
   width: 100%;
   -webkit-transform: translate3d(0, 0, 0);
@@ -154,13 +155,17 @@ svg {
 }
 .scroll-graphic.is-fixed {
   position: fixed;
-  left: 0px;
-  top: 15px;
-  margin: 0 auto;
+  left: 50%;
 }
 .scroll-graphic.is-bottom {
   bottom: 0;
   top: auto;
+}
+.scroll-graphic .scroll-wrapper {
+  position: relative;
+  max-width: 850px;
+  width: 100%;
+  left: -50%;
 }
 .scroll-graphic .scroll-svg {
   position: absolute;
