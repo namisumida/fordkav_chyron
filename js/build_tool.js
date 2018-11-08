@@ -24,7 +24,7 @@ var svg_tool = d3.select("#tool-svg")
 var screen_tool = svg_tool.append("g");
 
 // Import csv and create
-d3.csv("../Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
+d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 
   var dataset = data; // Once loaded, copy to dataset
 
