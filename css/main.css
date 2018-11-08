@@ -177,13 +177,12 @@ html, body{
 #screen9 {
   margin: 0 auto;
   position: relative;
-  top: 150px;
+  top: -150px;
   line-height: 1.6;
 }
 #screen10 {
   margin: 0 auto;
   position: relative;
-  top: 250px;
   line-height: 1.6;
 }
 #chyron2-text-msnbc {
@@ -233,7 +232,7 @@ html, body{
 #screen11 {
   margin: 0 auto;
   position: relative;
-  top: 350px;
+  top: 150px;
   line-height: 1.6;
 }
 #screen11-svg {
