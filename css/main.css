@@ -6,17 +6,19 @@ html, body{
 
 
 #intro {
-  margin-bottom: 200px;
+  margin-bottom: 100px;
+  background-color: #F7F7F7;
+  height: 1050px;
 }
 .opener-title {
-  top: 30px;
+  top: 50px;
   max-width: 600px;
   position: relative;
   margin: 0 auto;
   line-height: 1.5;
 }
 #opener-title {
-  font-size: 38px;
+  font-size: 45px;
   text-align: center;
   font-weight: 800;
 }
@@ -174,15 +176,19 @@ html, body{
   margin: 0 auto 2rem auto;
 }
 
+#gray-wrapper {
+  background-color: #F7F7F7;
+  height: 1100px;
+}
 #screen9 {
   margin: 0 auto;
   position: relative;
-  top: -150px;
   line-height: 1.6;
 }
 #screen10 {
   margin: 0 auto;
   position: relative;
+  top: 75px;
   line-height: 1.6;
 }
 #chyron2-text-msnbc {
@@ -232,18 +238,23 @@ html, body{
 #screen11 {
   margin: 0 auto;
   position: relative;
-  top: 150px;
   line-height: 1.6;
+  height: 750px;
 }
 #screen11-svg {
   max-width: 1000px;
 }
 
-
+#gray-wrapper2 {
+  position: relative;
+  background-color: #F7F7F7;
+}
 #outro {
   height: 800px;
   max-width: 900px;
-  margin: auto;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 .container-svg {
   position: relative;
@@ -275,7 +286,6 @@ html, body{
 .slider:hover {
   opacity: 1;
 }
-
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
@@ -284,10 +294,23 @@ html, body{
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
-
 .slider::-moz-range-thumb {
     width: 53px; /* Set a specific slider handle width */
     height: 20px; /* Slider handle height */
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
+}
+
+
+
+#methods {
+  margin: 0 auto;
+  position: relative;
+  max-width: 600px;
+}
+.methods-text {
+  font-weight: 200;
+  font-size: 11px;
+  display: inline-block;
+  text-align: left;
 }
