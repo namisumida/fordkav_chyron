@@ -1,6 +1,6 @@
 // DEFINING MEASUREMENTS
 // Define svg and margins
-var margin = {top:0, bottom:10, right:20, left:0, left_chyron2: 50, btwn_chyron: 30, left_chyron:55};
+var margin = {top:0, bottom:10, right:20, left:0, left_chyron2: 50, btwn_chyron: 30, left_chyron:45};
 var w_svg = 850;
 var h_svg = 770;
 var top = 20;
@@ -91,15 +91,6 @@ var intro_dataset = [{network: "msnbc", chyron: "KAVANAUGH: I WILL NOT WITHDRAW 
 										 {network: "cnn", chyron: "CHRISTINE BLASEY FORD ABOUT TO TESTIFY ON KAVANAUGH ALLEGATIONS"},
 									 	 {network: "fox", chyron: "SEN. GRASSLEY (R-IA) DELIVERS OPENING STATEMENTS"}];
 
-var nonquotes_dataset = [{network: "msnbc", chyron: "FORD CONCLUDES TESTIMONY, KAVANAUGH TO SPEAK TO SENATE SOON"},
-										 {network: "cnn", chyron: "CHRISTINE BLASEY FORD ARIVES TO GIVE TESTIMONY HEARING"},
-									 	 {network: "fox", chyron: "SOON: JUDGE KAVANAUGH TO TESTIFY ON ACCUSATIONS AGAINST HIM"}];
-
-// Another dataset for the 2nd set of examples - direct quotes
-var quotes_dataset = [{network: "msnbc", chyron: "FORD: KAVANAUGH'S \“ASSAULT ON ME DRASTICALLY ALTERED MY LIFE.\" APART FROM THE ASSAULT, \"LAST COUPLE OF WEEKS HAVE BEEN THEH ARDEST OF MY LIFE.\""},
-										 {network: "cnn", chyron: "FORD: NO POLITICAL MOTIVATION FOR COMING FORWARD"},
-									 	 {network: "fox", chyron: "KAVANAUGH: FALSE ALLEGATIONS HAVE DESTROYED MY FAMILY AND MY NAME"}];
-
 // Ford and Kavanaugh start/end times
 var ford_start = parseTime("9/28/18 10:03:00");
 var ford_end = parseTime("9/28/18 14:18:00");
@@ -114,9 +105,7 @@ var screen5 = svg.append("g");
 var screen6 = svg.append("g");
 var screen7 = svg.append("g");
 var screen8 = svg.append("g");
-var screen9 = svg.append("g");
-var screen10 = svg.append("g");
-var screen11 = svg.append("g");
+var screen11 = d3.select("#screen11-svg").append("g");
 
 d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 
@@ -149,12 +138,12 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 					.attr("y", pos_brandtext-30)
 					.attr("x", function(d) {
 						if (d.network=="msnbc") {
-							return margin.left_chyron+w_chyron/2;
-						}
-						else if (d.network=="cnn") {
-							return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3;
-						}
-						else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5; }
+ 						 return margin.left_chyron+sq_spacing*5-(sq_padding/2);
+ 					 }
+ 					 else if (d.network=="cnn") {
+ 						 return margin.left_chyron+margin.btwn_chyron+(sq_spacing*15)-(sq_padding/2);
+ 					 }
+ 					 else { return margin.left_chyron+margin.btwn_chyron*2+(sq_spacing*25)-(sq_padding/2); }
 					})
 					.style("text-anchor", "middle")
 					.style("font-size", 16)
@@ -576,221 +565,270 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
 				 .attr("y", 340)
 				 .style("fill", "none");
 
-	// 9: Quotation intro
-	// Intro text
-	screen9.append("text")
-				 .text("We've seen that some networks are more likely to change captions during one testimony over the other, \
-				 but what about the content of these captions?")
-				 .attr("id", "intro9_1")
-				 .attr("class", "intro_text")
-				 .attr("x", (w_svg-680)/2)
-				 .attr("y", 12)
-				 .call(wrap, 680);
-	screen9.append("text")
-				 .text("To get an understanding of the content in these captions, we can categorize them into two types: \
-				 One type of caption describes the topic or sequence of events that is currently being aired or will be aired \
-				 in the near future. Here are some examples:")
-				 .attr("id", "intro9_2")
-				 .attr("class", "intro_text")
-				 .attr("x", (w_svg-680)/2)
-				 .attr("y", 60)
-				 .call(wrap, 680);
-	screen9.selectAll("text")
-				 .selectAll("tspan")
-				 .attr("y", -500) // move all text elements away
-
-	// Chyron rect
-	screen9.selectAll("chyron_rect")
-				 .data(nonquotes_dataset)
-				 .enter()
-				 .append("rect")
-				 .attr("class", "chyron_rect")
-				 .attr("x", function(d) {
-					 if (d.network=="msnbc") {
-						 return margin.left_chyron2;
-					 }
-					 else if (d.network=="cnn") {
-						 return margin.left_chyron2*2+w_chyron;
-					 }
-					 else { return margin.left_chyron2*3+w_chyron*2; }
-				 })
-				 .attr("y", -500)
-				 .attr("width", w_chyron)
-				 .attr("height", h_chyron)
-				 .style("fill", function(d) {
-					 if (d.network=="msnbc") {
-						 return yellow;
-					 }
-					 else if (d.network=="cnn") {
-						 return red;
-					 }
-					 else { return blue; }
-				 })
-				 .style("opacity", 0.5);
-
-	// Chyron example text
-	screen9.selectAll("chyron_text")
-				 .data(nonquotes_dataset)
-				 .enter()
-				 .append("text")
-				 .attr("class", "chyron_text")
-				 .text(function(d) {
-					 return d.chyron;
-				 })
-				 .attr("x", function(d) {
-					 if (d.network=="msnbc") {
-						 return margin.left_chyron2+w_chyron/2;
-					 }
-					 else if (d.network=="cnn") {
-						 return margin.left_chyron2*2+(w_chyron/2)*3;
-					 }
-					 else { return margin.left_chyron2*3+(w_chyron/2)*5; }
-				 })
-				 .attr("y", 190)
-				 .call(wrap, w_chyron-20);
-	screen9.selectAll(".chyron_text")
-				 .selectAll("tspan")
-				 .attr("y", -500);
-
-	// 10: Quotation intro
-	// Intro text
-	screen10.append("text")
-				 .text("The other type of captions summarize what was said during the testimonies, using indirect and direct quotes. Because so much is said \
-				 during these testimonies and therefore could be summarized in these types of captions, the ones that are chosen to be displayed can be considered to be \
-				 the main takeaways as deemed by the network.")
-				 .attr("id", "intro10_1")
-				 .attr("class", "intro_text")
-				 .attr("x", (w_svg-700)/2)
-				 .attr("y", 12)
-				 .call(wrap, 700);
-	screen10.append("text")
-				 .text("What is emphasized and what is not emphasized are important to notice across the three newtorks. In many \
-				 ways, the disparities in these captions are even starker than previous differences found in the amount of chyrons displayed during each testimony.")
-				 .attr("id", "intro10_2")
-				 .attr("class", "intro_text")
-				 .attr("x", (w_svg-700)/2)
-				 .attr("y", 100)
-				 .call(wrap, 700);
-	screen10.selectAll("text")
-				 .selectAll("tspan")
-				 .attr("y", -500) // move all text elements away
-
-	// Chyron example text
-	screen10.selectAll("chyron_text")
-				 .data(quotes_dataset)
-				 .enter()
-				 .append("text")
-				 .attr("class", "chyron_text")
-				 .text(function(d) {
-					 return d.chyron;
-				 })
-				 .attr("x", function(d) {
-					 if (d.network=="msnbc") {
-						 return margin.left_chyron2+w_chyron/2;
-					 }
-					 else if (d.network=="cnn") {
-						 return margin.left_chyron2*2+(w_chyron/2)*3;
-					 }
-					 else { return margin.left_chyron2*3+(w_chyron/2)*5; }
-				 })
-				 .attr("y", function(d) {
-					 if (d.network=="msnbc") {
-						 return 180;
-					 }
-					 else { return 190; }
-				 })
-			   .style("font-size", function(d) {
-					 if (d.network=="msnbc") {
-						 return 12;
-					 }
-					 else { return 14; }
-				 })
-				 .call(wrap, w_chyron-20);
-	screen10.selectAll(".chyron_text")
-				 .selectAll("tspan")
-				 .attr("y", -500);
-
-	// 11: Circle waffles
-	// Intro text
-	screen11.append("text")
-					.text("Captions detailing Ford's words account for a sizable portion of captions displayed on CNN and MSNBC, but just a fraction for Fox News. When it comes to Kavanaugh's words, Fox News highlights many more.")
-					.attr("class", "intro_text")
-					.attr("id", "intro11_1")
-					.attr("x", (w_svg-600)/2)
-					.attr("y", 20)
-					.call(wrap, 600);
-	screen11.append("text")
-					.text("Scroll over each circle to read the caption that was displayed.")
-					.attr("class", "intro_text")
-					.attr("id", "intro11_2")
-					.attr("x", (w_svg-600)/2)
-					.attr("y", 95)
-					.call(wrap, 600);
-	screen11.selectAll(".intro_text")
-				  .selectAll("tspan")
-					.attr("y", -500);
-
-	screen11.selectAll("grid_circle")
-				  .data(dataset)
+  // Screen 11
+	screen11.selectAll("brand_text")
+	 				.data(intro_dataset)
 					.enter()
-					.filter(function(d) {
-						return d.chyron!="";
+					.append("text")
+					.text(function(d) {
+						if (d.network=="cnn") {
+							return "CNN";
+						}
+						else if (d.network=="msnbc") {
+							return "MSNBC";
+						}
+						else { return "Fox News"; }
 					})
-					.append("circle")
-					.attr("class", "grid_circle")
-					.attr("cx", function(d,i) {
+					.attr("class", "brand_text")
+  			  .attr("y", pos_brandtext-40)
+          .attr("x", function(d) {
+            if (d.network=="msnbc") {
+              return margin.left_chyron+(10 * sq_spacing)/2-sq_spacing/2;
+            }
+            else if (d.network=="cnn") {
+              return margin.left_chyron+(10 * sq_spacing)*3/2 - sq_spacing/2 + margin.btwn_chyron;
+            }
+            else { return margin.left_chyron+(10 * sq_spacing)*5/2 - sq_spacing/2 + margin.btwn_chyron*2; }
+          })
+					.style("text-anchor", "middle")
+					.style("font-size", 16)
+					.style("font-weight", 700);
+
+ 	screen11.selectAll("grid_circle")
+ 				  .data(dataset)
+ 					.enter()
+ 					.filter(function(d) {
+ 						return d.chyron!="";
+ 					})
+ 					.append("circle")
+ 					.attr("class", "grid_circle")
+ 					.attr("cx", function(d,i) {
+ 						if (d.network=="msnbc") {
+ 							 return margin.left_chyron+(i % 10 * sq_spacing);
+ 						 }
+ 						 else if (d.network=="cnn") {
+ 							 return margin.left_chyron+margin.btwn_chyron+(10*sq_spacing)+((i-103) % 10 * sq_spacing);
+ 						 }
+ 						 else { return margin.left_chyron+margin.btwn_chyron*2+(20*sq_spacing) + ((i-173) % 10 * sq_spacing); };
+ 					})
+					.attr("cy", function(d,i) {
 						if (d.network=="msnbc") {
-							 return margin.left_chyron+(i % 10 * sq_spacing) + sq_spacing/2;
-						 }
-						 else if (d.network=="cnn") {
-							 return margin.left_chyron+margin.btwn_chyron+(10*sq_spacing)+((i-103) % 10 * sq_spacing) + sq_spacing/2;
-						 }
-						 else { return margin.left_chyron+margin.btwn_chyron*2+(20*sq_spacing) + ((i-173) % 10 * sq_spacing) + sq_spacing/2; };
+							return pos_gridstart+Math.floor(i / 10) % max_rows * sq_spacing + sq_spacing/2;
+						}
+						else if (d.network=="cnn") {
+							return pos_gridstart+Math.floor((i-103) / 10) % max_rows * sq_spacing + sq_spacing/2;
+						}
+						else { return pos_gridstart+Math.floor((i-173) / 10) % max_rows * sq_spacing + sq_spacing/2; }
 					})
-					.attr("cy", -500)
-					.attr("r", sq_size-8)
+ 					.attr("r", sq_size-8)
+ 					.style("fill", function(d) {
+ 						if (d.network=="msnbc") {
+ 								 return yellow;
+ 							 }
+ 							 else if (d.network=="cnn") {
+ 								 return red;
+ 							 }
+ 							 else { return blue; }
+ 					  })
+ 				  .style("opacity", .25);
+
+ 	// F and K legend/key
+ 	screen11.append("text")
+ 					.attr("id", "ford_descrip")
+ 					.attr("class", "description")
+ 					.text("Captions quoting Ford")
+ 					.attr("y", pos_gridstart+7)
+ 					.attr("x", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3+2)
+ 					.call(wrap, 70)
+ 					.style("fill", "none");
+ 	screen11.append("line")
+ 					.attr("id", "ford_line")
+ 					.attr("x1", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3-13)
+ 					.attr("x2", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3-2)
+ 					.attr("y1", pos_gridstart+11)
+ 					.attr("y2", pos_gridstart+11)
+ 					.style("stroke-width", 1)
+ 					.style("stroke", "none");
+ 	screen11.append("text")
+ 					.attr("id", "kav_descrip")
+ 					.attr("class", "description")
+ 					.text("Captions quoting Kavanaugh")
+ 					.attr("y", pos_gridstart+sq_spacing*3+3)
+ 					.attr("x", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3+2)
+ 					.call(wrap, 70)
+ 					.style("fill", "none");
+ 	screen11.append("line")
+ 					.attr("id", "kav_line")
+ 					.attr("x1", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3-13)
+ 					.attr("x2", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3-2)
+ 					.attr("y1", pos_gridstart+sq_spacing*3+11)
+ 					.attr("y2", pos_gridstart+sq_spacing*3+11)
+ 					.style("stroke-width", 1)
+ 					.style("stroke", "none");
+
+	// Transitions for screen 11
+	// Transition for Ford circles
+	screen11.selectAll(".grid_circle")
+					.filter(function(d) {
+						return d.chyron.includes("FORD:");
+					})
+					.transition()
+					.delay(1000)
+					.duration(600)
+					.style("opacity", 1)
 					.style("fill", function(d) {
 						if (d.network=="msnbc") {
-								 return yellow;
-							 }
-							 else if (d.network=="cnn") {
-								 return red;
-							 }
-							 else { return blue; }
-					  })
-				  .style("opacity", .25);
+								return light_yellow;
+							}
+							else if (d.network=="cnn") {
+							 return light_red;
+							}
+							else { return light_blue; }
+					})
+					.style("stroke", function(d) {
+						if (d.network=="msnbc") {
+							return dark_yellow;
+						}
+						else if (d.network=="cnn") {
+							return dark_red;
+						}
+						else { return dark_blue; }
+					})
+					.style("stroke-width", 2);
 
-	// F and K legend/key
-	screen11.append("text")
-					.attr("id", "ford_descrip")
-					.attr("class", "description")
-					.text("Captions quoting Ford")
-					.attr("y", pos_gridstart+7)
-					.attr("x", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3+15)
-					.call(wrap, 70)
-					.style("fill", "none");
-	screen11.append("line")
-					.attr("id", "ford_line")
-					.attr("x1", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3-2)
-					.attr("x2", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3+8)
-					.attr("y1", pos_gridstart+11)
-					.attr("y2", pos_gridstart+11)
-					.style("stroke-width", 1)
-					.style("stroke", "none");
-	screen11.append("text")
-					.attr("id", "kav_descrip")
-					.attr("class", "description")
-					.text("Captions quoting Kavanaugh")
-					.attr("y", pos_gridstart+sq_spacing*3+3)
-					.attr("x", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3+15)
-					.call(wrap, 70)
-					.style("fill", "none");
-	screen11.append("line")
-					.attr("id", "kav_line")
-					.attr("x1", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3-2)
-					.attr("x2", margin.left_chyron+margin.btwn_chyron*2+w_chyron*3+8)
-					.attr("y1", pos_gridstart+sq_spacing*3+11)
-					.attr("y2", pos_gridstart+sq_spacing*3+11)
-					.style("stroke-width", 1)
-					.style("stroke", "none");
-});
+	// Description/labels
+	screen11.select("#ford_line")
+					.transition()
+					.delay(1500)
+					.duration(600)
+					.style("stroke", "gray");
+	screen11.select("#ford_descrip")
+					.selectAll("tspan")
+					.transition()
+					.delay(1500)
+					.duration(600)
+					.style("fill", "gray");
+
+	// Transition for Kav circles
+	screen11.selectAll(".grid_circle")
+					.filter(function(d) {
+						return d.chyron.includes("KAVANAUGH:");
+					})
+					.transition()
+					.delay(2000)
+					.duration(600)
+					.style("opacity", 1)
+					.style("fill", function(d) {
+						if (d.network=="msnbc") {
+							return yellow;
+						}
+						else if (d.network=="cnn") {
+							return red;
+						}
+						else { return blue; }
+					});
+
+	// Description/labels
+	screen11.select("#kav_line")
+			.transition()
+			.delay(2500)
+			.duration(600)
+			.style("stroke", "gray");
+	screen11.select("#kav_descrip")
+					.selectAll("tspan")
+					.transition()
+					.delay(2500)
+					.duration(600)
+					.style("fill", "gray");
+
+	// Mouseover feature of grid circles
+	screen11.selectAll(".grid_circle")
+					.filter(function(d) {
+						return d.chyron.includes("FORD:") | d.chyron.includes("KAVANAUGH:");
+					})
+					.on("mouseover", function(d) {
+						var network = d.network;
+						screen11.append("rect")
+									  .attr("id", "chyron_rect")
+									 .attr("x", function() {
+	                  if (network=="msnbc") {
+	       							return margin.left_chyron - (sq_size-8);
+	       						}
+	       						else if (network=="cnn") {
+	       							return margin.left_chyron+margin.btwn_chyron+w_chyron - (sq_size-8);
+	       						}
+	       						else { return margin.left_chyron+margin.btwn_chyron*2+w_chyron*2 - (sq_size-8); }
+									 })
+									 .attr("y", function() {
+										 if (network=="msnbc") {
+											return pos_circlemouse;
+										 }
+										 else { return pos_circlemouse-80; }
+									 })
+									 .style("fill", function() {
+										 if (network=="msnbc") {
+											return yellow;
+										}
+										else if (network=="cnn") {
+											return red;
+										}
+										else { return blue; }
+									 })
+									 .attr("width", w_chyron)
+									 .attr("height", h_chyron)
+									 .style("opacity", 0.5);
+
+						 var chyron = d.chyron;
+						 screen11.append("text")
+										.attr("id", "chyron_text")
+										.text(chyron)
+										.attr("x", function() {
+	                    if (network=="msnbc") {
+	        							return margin.left_chyron+w_chyron/2 - (sq_size-8);
+	        						}
+	        						else if (network=="cnn") {
+	        							return margin.left_chyron+margin.btwn_chyron+(w_chyron/2)*3 - (sq_size-8);
+	        						}
+	        						else { return margin.left_chyron+margin.btwn_chyron*2+(w_chyron/2)*5 - (sq_size-8); }
+										})
+										.attr("y", function() {
+										 labelWidth = this.getComputedTextLength();
+										 availWidth = w_chyron-10;
+										 lines = Math.ceil(labelWidth/availWidth);
+										 if (network=="msnbc") {
+											 if (lines <= 5) {
+												 return pos_circlemouse+30;
+											 }
+											 else {
+												 return pos_circlemouse+20;
+											 }
+										 }
+										 else {
+											 if (lines <= 5) {
+												 return pos_circlemouse-80+30;
+											 }
+											 else {
+												 return pos_circlemouse-80+20;
+											 }
+										 }
+										})
+										.style("text-anchor", "middle")
+										.style("font-size", function() {
+	                    if (lines <= 4) {
+	                      return 14;
+	                    }
+	                    else if (lines <=5) {
+	                      return 14 - Math.ceil(lines/4)*.5 + "px";
+	                    }
+	                    else {
+	                      return 14 - Math.ceil(lines/2)*.5 + "px";
+	                    }
+									 })
+										.style("font-weight", 400)
+										.call(wrap, w_chyron-10);
+					}) // end on mouseover
+					.on("mouseout", function() {
+						screen11.select("#chyron_rect").remove();
+						screen11.select("#chyron_text").remove();
+					});
+ });

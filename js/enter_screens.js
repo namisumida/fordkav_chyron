@@ -1,7 +1,3 @@
-function enter_homescreen() {
-  exit_screen3();
-}; // end enter home screen
-
 // Third screen - first grid
 function enter_screen3() {
   // Enter elements
@@ -576,7 +572,7 @@ function enter_screen8() {
 	screen3.selectAll(".grid_rect") // remove mouseover function
 				 .on("mouseover", function(d) {} );
 
-	// Transition from screen 9
+/*	// Transition from screen 9
 	screen3.selectAll(".grid_rect")
 				 .transition()
 				 .duration(600)
@@ -602,7 +598,6 @@ function enter_screen8() {
 				 .ease(d3.easeLinear)
 				 .attr("y", -500);
 	screen3.selectAll(".brand_text")
-         .attr("y", -500)
 				 .transition()
 				 .duration(600)
 				 .ease(d3.easeLinear)
@@ -633,7 +628,7 @@ function enter_screen8() {
 		 		 .selectAll("tspan")
 				 .transition()
 				 .duration(400)
-				 .style("fill", "gray");
+				 .style("fill", "gray");*/
 
 	// Move or add or adjust
 
@@ -721,7 +716,7 @@ function enter_screen8() {
 				 });
 
 } // end enter_screen8
-
+/*
 function enter_screen9() {
 	// transition from screen8
 	screen6.selectAll("text")
@@ -1124,4 +1119,4 @@ screen11.selectAll(".grid_circle")
 					screen11.select("#chyron_text").remove();
 				});
 
-} // end enter_screen11
+} // end enter_screen11 */

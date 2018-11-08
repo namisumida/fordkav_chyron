@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Coverage of Ford and Kavanaugh's hearings</title>
-		<script src="https://d3js.org/d3.v4.js"></script>
-		<script src='https://unpkg.com/intersection-observer@0.5.0/intersection-observer.js'></script>
-		<script src='https://unpkg.com/scrollama'></script>
-		<link type="text/css" href="css/KavanaughFord_scrolly.css" rel="stylesheet"/>
+<html>
 
-	</head>
-	<body>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Coverage of the Ford-Kavanaugh hearings</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link type="text/css" href="css/main.css" rel="stylesheet"/>
+
+
+</head>
+
+<body>
+	<section id="intro">
 		<div class="opener-title">
-		  <p id="opener-title">How cable networks covered Ford and Kavanaugh's hearings</p>
-		  <p id="opener-subtitle">An analysis of chyrons run during the two hearings on<br>MSNBC, CNN, and the Fox News Channel.</p>
+			<p id="opener-title">How cable networks covered Ford and Kavanaugh's hearings</p>
+			<p id="opener-subtitle">An analysis of chyrons run during the two hearings on<br>MSNBC, CNN, and the Fox News Channel.</p>
 		</div>
 		<div class="body-container-first">
-			<div class="prose-first" id="prose-first-1">You know those captions that appear on the lower part of your TV screen when you’re watching cable news?</div>
-			<div class="prose-first" id="prose-first-2">These captions, also known as “lower-third chyrons,” are oftentimes treated like headlines of an article - quick summaries of the news and topic at-hand. And while many of these captions are unbiased overviews of the news topic, they can still be a window into how breaking news stories are reported by cable news networks.</div>
-			<div class="prose-first" id="prose-first-3">On September 16, 2018, MSNBC, CNN and Fox News covered the nearly six hours of Christine Blasey Ford’s and Brett Kavanaugh’s hearings. While all three provided similar live video coverage, the captions that came alongside them differed in who was quoted, what was emphasized, and what was not emphasized.</div>
+			<p class="intro-text" id="screen1-intro-1">You know those captions that appear on the lower part of your TV screen when you’re watching cable news?</p>
+			<p class="intro-text" id="screen1-intro-2">These captions, also known as “lower-third chyrons,” are oftentimes treated like headlines of an article - quick summaries of the news and topic at-hand. And while many of these captions are unbiased overviews of the news topic, they can still be a window into how breaking news stories are reported by cable news networks.</p>
+			<p class="intro-text" id="screen1-intro-3">On September 16, 2018, MSNBC, CNN and Fox News covered the nearly six hours of Christine Blasey Ford’s and Brett Kavanaugh’s hearings. While all three provided similar live video coverage, the captions that came alongside them differed in who was quoted, what was emphasized, and what was not emphasized.</p>
 		</div>
 		<div class="body-container-rect">
 			<div class="body-container-brandtext" width="800" height="120">
@@ -36,145 +39,196 @@
 				<p class="chyron-text-first" id="chyron-text-fox">SEN. GRASSLEY (R-IA) DELIVERS OPENING STATEMENTS</p>
 			</div>
 		</div>
+	</section>
+	<section id='scroll'>
+		<div class='scroll__graphic'>
+			<svg id="scroll-svg" width="100%" height="100%"></svg>
+		</div>
+		<div class='scroll__text'>
+			<div class='step' data-step='1'>
+				<div id="circle"></div>
+			</div>
+			<div class='step' data-step='2'>
+				<div id="circle"></div>
+			</div>
+			<div class='step' data-step='3'>
+				<div id="circle"></div>
+			</div>
+			<div class='step' data-step='4'>
+				<div id="circle"></div>
+			</div>
+			<div class='step' data-step='5'>
+				<div id="circle"></div>
+			</div>
+			<div class='step' data-step='6'>
+				<div id="circle"></div>
+			</div>
+		</div>
+	</section>
 
-		<section id="scroll">
-
-			<!-- graphic conatiner -->
-			<div class="scroll-graphic">
-				<div class="scroll-wrapper">
-					<svg id="scroll-svg" width="100%" height="100%"></svg>
+	<section id="midscreens">
+		<section id="screen9">
+			<div class="body-container-first">
+				<p class="intro-text">We've seen that some networks are more likely to change captions during one testimony over the
+					other, but what about the content of these captions?<br><br>To get an understanding of the content in these captions,
+					we can categorize them into two types: One type of caption describes the topic or sequence of events that is currently
+					being aired or will be aired in the near future. Here are some examples:</p>
+			</div>
+		  <div class="body-container-rect">
+				<div class="body-container-brandtext" width="800" height="120">
+					<p class="brand-text" id="brand-text-msnbc">MSNBC</p>
+					<p class="brand-text" id="brand-text-cnn">CNN</p>
+					<p class="brand-text" id="brand-text-fox">Fox</p>
+				</div>
+				<svg id="svg-rect-first" width="800" height="200">
+					<rect class="rect-first" id="msnbc_rect" width="220", height="120"/>
+					<rect class="rect-first" id="cnn_rect" width="220", height="120"/>
+					<rect class="rect-first" id="fox_rect" width="220", height="120"/></svg>
+				<div class="body-container-chyron" width="800" height="120">
+					<p class="chyron-text-first" id="chyron2-text-msnbc">FORD CONCLUDES TESTIMONY, KAVANAUGH TO SPEAK TO SENATE SOON</p>
+					<p class="chyron-text-first" id="chyron2-text-cnn">CHRISTINE BLASEY FORD ARIVES TO GIVE TESTIMONY HEARING</p>
+					<p class="chyron-text-first" id="chyron2-text-fox">SOON: JUDGE KAVANAUGH TO TESTIFY ON ACCUSATIONS AGAINST HIM</p>
 				</div>
 			</div>
-			<!-- scroll container -->
-			<div class="container">
-				<div class='step' data-step='3'>
-					<div id="circle"></div>
+		</section>
+		<section id="screen10">
+			<div class="body-container-first">
+				<p class="intro-text">The other type summarizes what was said during the testimonies, using direct and/or indirect quotes.
+				So much is said during these testimonies, and as it is impossible to display all of it as chyron text, what is shown there is
+				chosen by the networks as main takeaways. <br><br>What are emphasized and what are <i>not</i> emphasized are important to notice
+				across the three newtorks. In many ways, the disparities in these captions are even starker than differences found previously.</p>
+			</div>
+		  <div class="body-container-rect">
+				<div class="body-container-brandtext" width="800" height="120">
+					<p class="brand-text" id="brand-text-msnbc">MSNBC</p>
+					<p class="brand-text" id="brand-text-cnn">CNN</p>
+					<p class="brand-text" id="brand-text-fox">Fox</p>
 				</div>
-				<div class='step' data-step='4'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='5'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='6'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='7'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='8'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='9'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='10'>
-					<div id="circle"></div>
-				</div>
-				<div class='step' data-step='11'>
-					<div id="circle"></div>
+				<svg id="svg-rect-first" width="800" height="200">
+					<rect class="rect-first" id="msnbc_rect" width="220", height="120"/>
+					<rect class="rect-first" id="cnn_rect" width="220", height="120"/>
+					<rect class="rect-first" id="fox_rect" width="220", height="120"/></svg>
+				<div class="body-container-chyron" width="800" height="120">
+					<p class="chyron-text-first" id="chyron3-text-msnbc">FORD: KAVANAUGH'S “ASSAULT ON ME DRASTICALLY ALTERED MY LIFE." APART FROM THE ASSAULT, "LAST COUPLE OF WEEKS HAVE BEEN THE HARDEST OF MY LIFE"</p>
+					<p class="chyron-text-first" id="chyron3-text-cnn">FORD: NO POLITICAL MOTIVATION FOR COMING FORWARD</p>
+					<p class="chyron-text-first" id="chyron3-text-fox">KAVANAUGH: FALSE ALLEGATIONS HAVE DESTROYED MY FAMILY AND MY NAME</p>
 				</div>
 			</div>
-
 		</section>
-
-		<section id="tool">
-			<div class="container-tool">
-					<svg id="tool-svg" width="100%" height="100%"></svg>
-					<input id="slider" class="slider" type="range" min="0" max="8" step="1" value="0" orient="horizontal"></input>
-			<div>
+		<section id="screen11">
+			<div class="body-container-first">
+				<p class="intro-text">Captions detailing Ford's words account for a sizable portion of captions displayed on CNN and MSNBC, but just a fraction for Fox News. When it comes to Kavanaugh's words, Fox News highlights many more.
+				<br><br>Scroll over each circle to read the caption that was displayed.</p>
+			</div>
+			<div class="body-container-rect" style="top: -30px">
+				<svg id="screen11-svg" width="926" height="800">
+				</svg>
+			</div>
 		</section>
+	</section>
+	<section id='outro'>
+		<div class="body-container-first">
+			<p class="intro-text">Explore on your own! Use the slider to move throughout the day and click on each circle
+			to see the caption that was displayed, along with captions that were displayed by other networks at a similar time.</p>
+		</div>
+		<div class="container-svg">
+			<svg id="tool-svg" width="100%" height="100%"></svg>
+			<input id="slider" class="slider" type="range" min="0" max="8" step="1" value="0" orient="horizontal"></input>
 
-		<script type="text/javascript" src="js/build.js"></script>
-		<script type="text/javascript" src="js/build_tool.js"></script>
-		<script type="text/javascript" src="js/exit_screens.js"></script>
-		<script type="text/javascript" src="js/enter_screens.js"></script>
+		</div>
+	</section>
+	<div class='debug'></div>
 
-		<script type="text/javascript">
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<script src='js/stickyfill.min.js'></script>
+	<script src='https://unpkg.com/intersection-observer@0.5.0/intersection-observer.js'></script>
+	<script src='js/scrollama.min.js'></script>
+	<script src='js/build.js'></script>
+	<script src='js/exit_screens.js'></script>
+	<script src='js/enter_screens.js'></script>
+	<script src='js/build_tool.js'></script>
 
-		document.getElementById("slider").style.visibility="hidden"; // hide slider for now
-
-			// Scrollama
-			// using d3 for convenience, and storing a selected elements
-			var container = d3.select('#scroll');
-			var graphic = container.select('.scroll-graphic')
-			var chart = graphic.select('.scroll-svg');
-			var text = container.select('.container');
-			var step = text.selectAll('.step');
-
-			// initialize the scrollama
-			var scroller = scrollama();
-
-			// scrollama event handlers
-			function handleStepEnter(response) {
-
-				if (response.index==0) {
-					enter_screen3();
-				}
-				else if (response.index==1) {
-					enter_screen4();
-				}
-				else if (response.index==2) {
-					enter_screen5();
-				}
-				else if (response.index==3) {
-					enter_screen6();
-				}
-				else if (response.index==4) {
-					enter_screen7();
-				}
-				else if (response.index==5) {
-					enter_screen8();
-				}
-				else if (response.index==6) {
-					enter_screen9();
-				}
-				else if (response.index==7) {
-					enter_screen10();
-				}
-				else if (response.index==8) {
-					enter_screen11();
-				}
+	<script>
+		// using d3 for convenience
+		var container = d3.select('#scroll');
+		var graphic = container.select('.scroll__graphic');
+		var text = container.select('.scroll__text');
+		var step = text.selectAll('.step');
+		// initialize the scrollama
+		var scroller = scrollama();
+		// generic window resize listener event
+		function handleResize() {
+			// 1. update height of step elements
+			var stepHeight = Math.floor(window.innerHeight * 0.75);
+			step.style('height', stepHeight + 'px');
+			// 2. update width/height of graphic element
+			var bodyWidth = d3.select('body').node().offsetWidth;
+			var graphicMargin = 16 * 4;
+			var textWidth = text.node().offsetWidth;
+			var graphicWidth = container.node().offsetWidth - textWidth - graphicMargin;
+			var graphicHeight = Math.floor(window.innerHeight / 2)
+			graphic
+				.style('width', graphicWidth + 'px')
+				.style('height', graphicHeight + 'px')
+			// 3. tell scrollama to update new element dimensions
+			scroller.resize();
+		}
+		// scrollama event handlers
+		function handleStepEnter(response) {
+			// response = { element, direction, index }
+			if (response.index==0) {
+				enter_screen3();
 			}
-
-			function handleContainerEnter(response) {
-			  // response = { direction }
-
-			  // sticky the graphic (old school)
-			  graphic.classed("is-fixed", true);
-			  graphic.classed("is-bottom", false);
+			else if (response.index==1) {
+				enter_screen4();
 			}
-
-			function handleContainerExit(response) {
-			  // response = { direction }
-
-			  // un-sticky the graphic, and pin to top/bottom of container
-			  graphic.classed("is-fixed", false);
-			  graphic.classed("is-bottom", response.direction === "down");
+			else if (response.index==2) {
+				enter_screen5();
 			}
-
-			function init() {
-
-			  // 2. setup the scroller passing options
-			  // this will also initialize trigger observations
-			  // 3. bind scrollama event handlers (this can be chained like below)
-			  scroller
-			    .setup({
-			      container: "#scroll",
-			      graphic: ".scroll-graphic",
-			      text: ".container",
-			      step: ".container .step"
-			    })
-			    .onStepEnter(handleStepEnter)
-			    .onContainerEnter(handleContainerEnter)
-			    .onContainerExit(handleContainerExit);
+			else if (response.index==3) {
+				enter_screen6();
 			}
-
-			// kick things off
-			init();
-
-
-		</script>
-
+			else if (response.index==4) {
+				enter_screen7();
+			}
+			else if (response.index==5) {
+				enter_screen8();
+			}
+		}
+		function handleContainerEnter(response) {
+			// response = { direction }
+		}
+		function handleContainerExit(response) {
+			// response = { direction }
+		}
+		function setupStickyfill() {
+			d3.selectAll('.sticky').each(function () {
+				Stickyfill.add(this);
+			});
+		}
+		function init() {
+			setupStickyfill();
+			// 1. force a resize on load to ensure proper dimensions are sent to scrollama
+			handleResize();
+			// 2. setup the scroller passing options
+			// this will also initialize trigger observations
+			// 3. bind scrollama event handlers (this can be chained like below)
+			scroller.setup({
+				container: '#scroll',
+				graphic: '.scroll__graphic',
+				text: '.scroll__text',
+				step: '.scroll__text .step',
+				offset: 0.33,
+			})
+				.onStepEnter(handleStepEnter)
+				.onContainerEnter(handleContainerEnter)
+				.onContainerExit(handleContainerExit);
+			// setup resize event
+			window.addEventListener('resize', handleResize);
+		}
+		// kick things off
+		init();
+	</script>
 </body>
+
 </html>
