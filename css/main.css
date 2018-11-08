@@ -235,6 +235,10 @@ html, body{
   left: 555px;
   width: 210px;
 }
+#midscreens {
+  position: relative;
+  top: -50px;
+}
 #screen11 {
   margin: 0 auto;
   position: relative;
