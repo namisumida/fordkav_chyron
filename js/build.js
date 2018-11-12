@@ -6,8 +6,8 @@ var h_svg = 770;
 var top = 20;
 // Create svg
 var svg = d3.select("#scroll-svg")
-			.attr("width", w_svg)
-			.attr("height", h_svg);
+						.attr("width", w_svg)
+						.attr("height", h_svg);
 
 // Grid
 var max_rows = 11; // max number of rows
@@ -28,21 +28,8 @@ var pos_belowcount = pos_gridstart+sq_spacing*12; // MSNBC
 var pos_squaremouse = pos_belowcount+30; // MSNBC
 var pos_circlemouse = pos_gridstart+sq_spacing*12 // MSNBC
 
-// Define color palette
-var red = d3.rgb(212,89,84);
-var blue = d3.rgb(20,151,252);
-var yellow = d3.rgb(232,164,51);
-var dark_red = d3.rgb(135, 63, 53);
-var dark_blue = d3.rgb(0, 109, 230);
-var dark_yellow = d3.rgb(206, 112, 32);
-var light_red = d3.rgb(229,155,152);
-var light_blue = d3.rgb(113,192,253);
-var light_yellow = d3.rgb(241,200,132);
-
 // DEFINING CONVERSION FUNCTIONS
 // Convert variable data types
-var parseTime = d3.timeParse("%m/%d/%y %I:%M:%S"); // convert strings to Dates
-var formatTime = d3.timeFormat("%I:%M"); // convert Dates to strings
 var rowConverter = function(d) {
 	return {
 		time: parseTime("9/28/18 " + d.time),
@@ -50,39 +37,6 @@ var rowConverter = function(d) {
 		network: d.network
 	};
 };
-// text wrapping function
-function wrap(text, width) {
-	text.each(function () {
-    var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 1.3, // ems
-        x = text.attr("x"),
-        y = text.attr("y"),
-        dy = 0, //parseFloat(text.attr("dy")),
-        tspan = text.text(null)
-                    .append("tspan")
-                    .attr("x", x)
-                    .attr("y", y)
-                    .attr("dy", dy + "em");
-    while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan")
-                        .attr("x", x)
-                        .attr("y", y)
-                        .attr("dy", ++lineNumber * lineHeight + dy + "em")
-                        .text(word);
-        }
-    }
-	});
-}; // end wrap function
 
 // DEFINING DATASETS
 // This is a convenient dataset to have because it just has three data points with the three networks - can be used
