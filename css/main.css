@@ -44,6 +44,11 @@ html, body{
   top: 150px;
   line-height: 1.6;
 }
+.disclaimer {
+  font-size: 9px;
+  font-weight: 200;
+  text-align: left;
+}
 .intro-text {
   font-weight: 200;
   font-size: 16px;
