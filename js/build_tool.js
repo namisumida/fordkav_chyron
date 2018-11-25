@@ -418,17 +418,17 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
                                  else { return ""; }
                                })
                                .style("font-size", function() {
-                                labelWidth = this.getComputedTextLength();
-                                availWidth = w_headlines-tool_margin.left-tool_margin.right;
-                                lines = Math.ceil(labelWidth/availWidth);
-                                if (lines <= 3) {
-                                  return chyrontext_size;
-                                }
-                                else if (lines <= 5 ) {
-                                  return chyrontext_size-(lines-3);
-                                }
-                                else { return 11; }
-                              })
+                                  labelWidth = this.getComputedTextLength();
+                                  availWidth = w_headlines-tool_margin.left-tool_margin.right;
+                                  lines = Math.ceil(labelWidth/availWidth);
+                                  if (lines <= 3) {
+                                    return chyrontext_size;
+                                  }
+                                  else if (lines <= 5 ) {
+                                    return chyrontext_size-(lines-3);
+                                  }
+                                  else { return 11; }
+                               })
                                .attr("x", tool_margin.left+10)
                                .attr("y", function(d) {
                                  if (d) {
@@ -493,7 +493,7 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
     // INTERACTIVITY
     // When time changes...
     d3.selectAll(".slider")
-      .on("change", function() {
+      .on("input", function() {
         current_value = parseInt(d3.select(this).node().value);
         var start_int = 10+current_value;
 
