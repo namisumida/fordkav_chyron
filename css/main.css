@@ -3,8 +3,6 @@ html, body{
   scroll-behavior: smooth;
   font-family: 'Open Sans', sans-serif;
 }
-
-
 #intro {
   margin-bottom: 100px;
   background-color: #F7F7F7;
@@ -251,7 +249,6 @@ html, body{
 }
 #midscreens {
   position: relative;
-  top: 150px;
 }
 #screen11 {
   margin: 0 auto;
@@ -330,6 +327,7 @@ html, body{
   position: relative;
   max-width: 600px;
   margin-top: 100px;
+  margin-bottom: 300px;
   height: 100px;
 }
 .methods-text {
