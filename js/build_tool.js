@@ -1,5 +1,5 @@
 // Tool margins
-var tool_margin = {top:0, bottom:10, right:20, left:20, w_between:40, h_between:10, intro_text:50};
+var tool_margin = {top:0, bottom:10, right:20, left:20, w_between:40, h_between:10, intro_text:0};
 var tool_timeline = 80; // height of timeline section
 var xScale, xScale_hour;
 var w_timeline = 470; // width of each line
@@ -37,7 +37,7 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
               .range([0, w_timeline]);
   var timeline_section = screen_tool.append("g")
                                     .attr("class", "timeline_section")
-                                    .attr("transform", "translate(0," + (tool_margin.top+tool_margin.intro_text+30) + ")");
+                                    .attr("transform", "translate(0,0)");
   timeline_section.append("text")
                   .attr("id", "timeline_start")
                   .text("10:00 a.m.")
@@ -114,12 +114,12 @@ d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
      				 .attr("x", 90)
      				 .attr("y", function(d) {
      					 if (d.network=="msnbc") {
-     							return 220;
+     							return (tool_margin.top+h_timeline+30+h_headlines/2+5);
      					 }
      					 else if (d.network=="cnn") {
-     							return 220+h_headlines+tool_margin.h_between;
+     							return (tool_margin.top+h_timeline+30+h_headlines*1.5+tool_margin.h_between+5);
      					 }
-     						else { return 220+h_headlines*2+tool_margin.h_between*2; }
+     						else { return (tool_margin.top+h_timeline+30+h_headlines*2.5+tool_margin.h_between*2+5); }
      				 })
      				 .style("text-anchor", "end")
      				 .style("font-size", 16)

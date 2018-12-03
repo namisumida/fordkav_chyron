@@ -264,7 +264,6 @@ html, body{
 #gray-wrapper2 {
   position: relative;
   background-color: #F7F7F7;
-  top: 100px;
   height: 700px;
 }
 #outro {
@@ -297,7 +296,7 @@ html, body{
   background: rgb(173,173,173);
   opacity: 0.8;
   left: 120px;
-  top: 118px;
+  top: 40px;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
@@ -326,8 +325,7 @@ html, body{
   margin: 0 auto;
   position: relative;
   max-width: 600px;
-  margin-top: 100px;
-  margin-bottom: 300px;
+  margin-bottom: 200px;
   height: 100px;
 }
 .methods-text {
