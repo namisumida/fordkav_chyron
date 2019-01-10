@@ -10,7 +10,7 @@ var chyrontext_size = 14;
 // Updated time:
 function time_to_string(time) {
   var time_str = formatTime(time)
-  if (+time < +parseTime("9/28/18 12:00:00")) {
+  if (+time < +parseTime("9/28/18 13:00:00")) {
     return time_str + " a.m.";
   }
   else {
