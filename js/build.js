@@ -28,13 +28,13 @@ else {
 	var margin = { top: 15, bottom: 10, left:(w - w_chyron - w_description)/2, right: (w - w_chyron - w_description)/2};
 };
 // Create svg
-var svg = d3.select("#scroll-svg")
-						.attr("width", "100%")
-						.attr("height", function() { // this is only the height of the last screen in scrolling
-							if (gridsPerRow==3) { return margin.top + 60 + h_brandText + h_spacing*2.5 + sq_spacing*11; }
-							else if (gridsPerRow==2) { return margin.top + 80 + h_brandText*2 + h_spacing*5 + sq_spacing*18; }
-							else { return margin.top + 80 + h_brandText*3 + h_spacing*7.5 + sq_spacing*25; }
-						});
+var svgTool = d3.select("#svg-scroll")
+								.attr("width", "100%")
+								.attr("height", function() { // this is only the height of the last screen in scrolling
+									if (gridsPerRow==3) { return margin.top + 100 + h_brandText + h_spacing*2.5 + sq_spacing*11; }
+									else if (gridsPerRow==2) { return margin.top + 140 + h_brandText*2 + h_spacing*5 + sq_spacing*18 + h_chyron; }
+									else { return margin.top + 140 + h_brandText*3 + h_spacing*7.5 + sq_spacing*25 + h_chyron*3; }
+								});
 // DEFINING CONVERSION FUNCTIONS
 // Convert variable data types
 var rowConverter = function(d) {
@@ -60,12 +60,12 @@ var kav_end = parseTime("9/28/18 18:44:00");
 
 // BUILD SCREENS
 var dataset;
-var screen3 = svg.append("g");
-var screen4 = svg.append("g");
-var screen5 = svg.append("g");
-var screen6 = svg.append("g");
-var screen7 = svg.append("g");
-var screen8 = svg.append("g");
+var screen3 = svgTool.append("g");
+var screen4 = svgTool.append("g");
+var screen5 = svgTool.append("g");
+var screen6 = svgTool.append("g");
+var screen7 = svgTool.append("g");
+var screen8 = svgTool.append("g");
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Screen 3
@@ -81,7 +81,10 @@ function setup_screen3() {
 				 .text("Between 9:50 a.m. and 7:15 p.m., MSNBC showed over 100 different chyrons, while Fox News showed 61. CNN fell between the two at 70.")
 				 .attr("x", 10)
 				 .attr("y", margin.top)
-				 .call(wrap, (w - 20));
+				 .call(wrap, (w - 20))
+				 .style("fill", function() {
+					 if (currScreen==3) { return "black"; }
+				 });
 
 	// Brand text
 	screen3.selectAll("brandText")
@@ -284,7 +287,10 @@ function resize_screen3() {
 				 .text("Between 9:50 a.m. and 7:15 p.m., MSNBC showed over 100 different chyrons, while Fox News showed 61. CNN fell between the two at 70.")
 				 .attr("x", 10)
 				 .attr("y", margin.top)
-				 .call(wrap, (w - 20));
+				 .call(wrap, (w - 20))
+				 .style("fill", function() {
+					 if (currScreen==3) { return "black"; }
+				 });
 
 	// Brand text
 	screen3.selectAll(".brandText")
@@ -496,7 +502,10 @@ function resize_screen4() {
 				 .attr("x", 10)
 				 .attr("y", margin.top)
 				 .text("Let's break up the chyrons into those that appeared during Ford's hearing and those that appeared during Kavanaugh's hearing. During Ford’s hearing, MSNBC changed their chyrons the most and Fox News the least. But that could be a function of the total number of chyrons shown (since we've already seen that MSNBC showed more chyrons overall compared to the other two networks).")
-				 .call(wrap, (w - 20));
+				 .call(wrap, (w - 20))
+				 .style("fill", function() {
+					 if (currScreen==4) { return "black"; }
+				 });
 }; // end resize screen4
 //////////////////////////////////////////////////////////////////////////////////////////
 // Screen 5
@@ -532,7 +541,10 @@ function resize_screen5() {
 				 .attr("x", 10)
 				 .attr("y", margin.top)
 				 .text("But when we look at the proportion of chyrons displayed during Ford’s hearing out of all chyrons shown,we find that at least half of MSNBC’s and CNN’s chyrons occurred during Ford’s hearing, compared with a third of Fox News’ chyrons - meaning Fox News was less likely to give varied reports of Ford’s hearing. Scroll over each square to read the chyron that was displayed.")
-				 .call(wrap, w-20);
+				 .call(wrap, w-20)
+				 .style("fill", function() {
+					 if (currScreen==5) { return "black"; }
+				 });
 }; // end resize screen 5
 //////////////////////////////////////////////////////////////////////////////////////////
 // Screen 6
@@ -598,7 +610,10 @@ function resize_screen6() {
 				 .attr("x", 10)
 				 .attr("y", margin.top)
 				 .text("And here are the numbers during Kavanaugh's hearing.")
-				 .call(wrap, w-20);
+				 .call(wrap, w-20)
+				 .style("fill", function() {
+					 if (currScreen==6) { return "black"; }
+				 });
 }; // end resize screen6
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -628,7 +643,10 @@ function resize_screen7() {
 				 .attr("x", 10)
 				 .attr("y", margin.top)
 				 .text("About a third of chyrons by MSNBC and CNN occurred during Kavanaugh's hearing, compared with 62% of Fox News' chyrons. Scroll over each square to read the chyron that was displayed.")
-				 .call(wrap, w-20);
+				 .call(wrap, w-20)
+				 .style("fill", function() {
+					 if (currScreen==7) { return "black"; }
+				 });
 }; // end resize screen7
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -745,7 +763,10 @@ function resize_screen8() {
 				 .attr("x", 10)
 				 .attr("y", margin.top)
 				 .text("Here's the breakdown for the three networks again. MSNBC and CNN were more likely to show varied chyrons during Ford's hearing, and Fox News during Kavanaugh's hearing.")
-				 .call(wrap, w-20);
+				 .call(wrap, w-20)
+				 .style("fill", function() {
+					 if (currScreen==8) { return "black"; }
+				 });
 }; // end resize screen8
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -1335,6 +1356,7 @@ function resize_screen11() {
             screen11.select("#chyron_text").remove();
           });
 }; // end resize screen 11
+
 ////////////////////////////////////////////////////////////////////////////////
 function resize_charts() {
 	w_doc = window.innerWidth;
@@ -1354,11 +1376,11 @@ function resize_charts() {
 		margin = { top: 15, bottom: 10, left:(w - w_chyron - w_description)/2, right: (w - w_chyron - w_description)/2};
 	};
 	// Create svg
-	svg.attr("height", function() {
-				if (gridsPerRow==3) { return 450; }
-				else if (gridsPerRow==2) { return 650; }
-				else { return 850; }
-			});
+	svgTool.attr("height", function() { // this is only the height of the last screen in scrolling
+						if (gridsPerRow==3) { return margin.top + 100 + h_brandText + h_spacing*2.5 + sq_spacing*11; }
+						else if (gridsPerRow==2) { return margin.top + 140 + h_brandText*2 + h_spacing*5 + sq_spacing*18 + h_chyron; }
+						else { return margin.top + 140 + h_brandText*3 + h_spacing*7.5 + sq_spacing*25 + h_chyron*3; }
+					});
 	resize_chyrons();
 	resize_screen3();
 	resize_screen4();
@@ -1383,11 +1405,3 @@ function init_charts() {
 
 	window.addEventListener("resize", resize_charts);
 }; // end init charts
-
-////////////////////////////////////////////////////////////////////////////////
-d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
-
-	dataset = data; // Once loaded, copy to dataset
-  init_charts();
-
-}); // end d3.csv function

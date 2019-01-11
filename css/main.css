@@ -175,6 +175,9 @@ html, body{
   max-width: 30rem;
   width: 1%;
 }
+.grid_rect {
+  cursor: pointer;
+}
 #circle {
   width: 10px;
   height: 10px;
@@ -209,7 +212,9 @@ html, body{
 #svg-screen11 {
   margin-top: 30px;
 }
-
+.grid_circle {
+  cursor: pointer;
+}
 
 
 

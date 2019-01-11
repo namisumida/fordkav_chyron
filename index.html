@@ -29,7 +29,7 @@
 
 	<section id='scroll'>
 		<div class='scroll__graphic'>
-			<svg id="scroll-svg"></svg>
+			<svg id="svg-scroll"></svg>
 		</div>
 		<div class='scroll__text'>
 			<div class='step' data-step='1'>
@@ -110,16 +110,13 @@
 	<script src='js/utils.js'></script>
 	<script src='js/chyrons.js'></script>
 	<script src='js/build.js'></script>
-	<script src='js/exit_screens.js'></script>
 	<script src='js/enter_screens.js'></script>
-	<script src='js/build_tool.js'></script>
-
 	<script>
-
 		var container = d3.select('#scroll');
 		var graphic = container.select('.scroll__graphic');
 		var text = container.select('.scroll__text');
 		var step = text.selectAll('.step');
+		var currScreen = 3;
 		// initialize the scrollama
 		var scroller = scrollama();
 		// generic window resize listener event
@@ -135,23 +132,29 @@
 			// response = { element, direction, index }
 			if (response.index==0) {
 				enter_screen3();
+				currScreen = 3;
 			}
 			else if (response.index==1) {
 				enter_screen4();
+				currScreen = 4;
 			}
 			else if (response.index==2) {
 				enter_screen5();
+				currScreen = 5;
 			}
 			else if (response.index==3) {
 				enter_screen6();
+				currScreen = 6;
 			}
 			else if (response.index==4) {
 				enter_screen7();
+				currScreen = 7;
 			}
 			else if (response.index==5) {
 				enter_screen8();
+				currScreen = 8;
 			}
-		}
+		}; // end handleStepEnter
 		function handleContainerEnter(response) {
 			// response = { direction }
 		}
@@ -198,7 +201,14 @@
 							.onContainerEnter(handleContainerEnter)
 							.onContainerExit(handleContainerExit);
 
+////////////////////////////////////////////////////////////////////////////////
+		d3.csv("Data/KavanaughFord_longdata.csv", rowConverter, function(data) {
+			dataset = data; // Once loaded, copy to dataset
+		  init_charts();
+		}); // end d3.csv function
 	</script>
+	<script src='js/build_tool.js'></script>
+
 </body>
 
 </html>

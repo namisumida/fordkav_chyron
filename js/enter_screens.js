@@ -1,4 +1,27 @@
 function enter_screen3() {
+  // Exit screen 4 elements
+  screen4.selectAll("text")
+         .transition()
+         .duration(600)
+         .ease(d3.easeLinear)
+         .attr("y", -500);
+  screen4.selectAll(".introText")
+         .selectAll("tspan")
+         .transition()
+         .duration(600)
+         .ease(d3.easeLinear)
+         .attr("y", -500)
+         .style("fill", "none");
+  screen4.select("#ford_descrip")
+         .selectAll("tspan")
+         .transition()
+         .duration(400)
+         .style("fill", "none");
+  screen4.select("#ford_line")
+         .transition()
+         .duration(400)
+         .style("stroke", "none");
+
   // Enter elements
   // Intro text
   screen3.selectAll(".introText")
@@ -106,10 +129,6 @@ function enter_screen3() {
            }
            else { return "61"; }
          });
-
-  // move out screen 2 elements
-  exit_screen4();
-
 }; // End enter_screen3()
 
 function enter_screen4() {
@@ -742,7 +761,18 @@ function enter_screen7() {
          .style("fill", "none");
   screen8.selectAll(".countText")
          .style("fill", "none");
-	exit_screen8();
+  screen8.selectAll(".introText")
+				 .selectAll("tspan")
+				 .transition()
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", -500)
+				 .style("fill", "none");
+  svgTool.attr("height", function() { // this is only the height of the last screen in scrolling
+            if (gridsPerRow==3) { return margin.top + 100 + h_brandText + h_spacing*2.5 + sq_spacing*11; }
+            else if (gridsPerRow==2) { return margin.top + 140 + h_brandText*2 + h_spacing*5 + sq_spacing*18 + h_chyron; }
+            else { return margin.top + 140 + h_brandText*3 + h_spacing*7.5 + sq_spacing*25 + h_chyron*3; }
+          });
 
 	// Intro text
 	screen7.selectAll(".introText")
@@ -1004,6 +1034,13 @@ function enter_screen8() {
 	screen3.selectAll(".grid_rect") // remove mouseover function
 				 .on("mouseover", function(d) {} );
 
+  // Change svg height
+  svgTool.attr("height", function() { // this is only the height of the last screen in scrolling
+            if (gridsPerRow==3) { return margin.top + 40 + h_brandText + h_spacing*2.5 + sq_spacing*11; }
+            else if (gridsPerRow==2) { return margin.top + 80 + h_brandText*2 + h_spacing*5 + sq_spacing*18; }
+            else { return margin.top + 80 + h_brandText*3 + h_spacing*7.5 + sq_spacing*25; }
+          });
+
 	// Move or add or adjust
 	// Intro text
 	screen8.selectAll(".introText")
@@ -1257,5 +1294,42 @@ function enter_screen11() {
           .style("fill", "gray");
 
   screen11Entered = true; // set value to true now that it has entered
-
 }; // end enter function
+
+/////////////////////////////////////////////////////
+// Exit functions
+function exit_screen5() {
+	screen5.selectAll(".introText")
+				 .selectAll("tspan")
+				 .transition()
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", -500)
+				 .style("fill", "none");
+	screen5.selectAll(".subtext")
+				 .transition()
+				 .duration(400)
+				 .style("fill", "none");
+	screen5.selectAll(".countText")
+				 .transition()
+				 .duration(400)
+				 .style("fill", "none");
+}; // end of exit_screen5
+function exit_screen6() {
+	screen6.selectAll(".introText")
+				 .selectAll("tspan")
+				 .transition()
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", -500)
+				 .style("fill", "none");
+} // end exit_screen6()
+function exit_screen7() {
+	screen7.selectAll(".introText")
+				 .selectAll("tspan")
+				 .transition()
+				 .duration(600)
+				 .ease(d3.easeLinear)
+				 .attr("y", -500)
+				 .style("fill", "none");
+} // end exit_screen7()
