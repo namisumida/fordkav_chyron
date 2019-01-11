@@ -4,45 +4,32 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Coverage of the Ford-Kavanaugh hearings</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Coverage of the Ford-Kavanaugh hearings</title>
 	<link type="text/css" href="css/main.css" rel="stylesheet"/>
 
 </head>
 
 <body>
 	<section id="intro">
-		<div class="opener-title">
-			<p id="opener-title">Cable TV news coverage of Ford-Kavanaugh hearings</p>
-			<p id="opener-subtitle">A look at the chyrons that were displayed by MSNBC, CNN, and the Fox News Channel during the two hearings.</p>
+		<div id="container-title">
+			<h1 id="title">Cable TV news coverage of Ford-Kavanaugh hearings</p>
+			<h3 id="subtitle">A look at the chyrons that were displayed by MSNBC, CNN, and the Fox News Channel during the two hearings.</p>
 		</div>
-		<div class="body-container-first">
-			<p class="intro-text" id="screen1-intro-1">You know those captions that appear on the lower part of your TV screen when you’re watching the news? These captions, also known as “lower-third chyrons,” are like headlines of an article - quick summaries of the news being broadcasted.</p>
-			<p class="intro-text" id="screen1-intro-2">On September 27, 2018, MSNBC, CNN and Fox News covered the nearly six hours of Christine Blasey Ford and Brett Kavanaugh’s hearings. While all three networks provided similar live video coverage, the chyrons that came alongside them differed in who was quoted, what was emphasized, and what was <i>not</i> emphasized.</p>
+		<div class="container-text" id="container-intro-text">
+			<p>You know those captions that appear on the lower part of your TV screen when you’re watching the news? These captions, also known as “lower-third chyrons,” are like headlines of an article - quick summaries of the news being broadcasted.</p>
+			<p>On September 27, 2018, MSNBC, CNN and Fox News covered the nearly six hours of Christine Blasey Ford and Brett Kavanaugh’s hearings. While all three networks provided similar live video coverage, the chyrons that came alongside them differed in who was quoted, what was emphasized, and what was <i>not</i> emphasized.</p>
 		</div>
-		<div class="body-container-rect">
-			<div class="body-container-brandtext" width="800" height="120">
-				<p class="brand-text" id="brand-text-msnbc">MSNBC</p>
-				<p class="brand-text" id="brand-text-cnn">CNN</p>
-				<p class="brand-text" id="brand-text-fox">Fox News</p>
-			</div>
-			<svg id="svg-rect-first" width="800" height="200">
-				<rect class="rect-first" id="msnbc_rect" width="220", height="120"/>
-				<rect class="rect-first" id="cnn_rect" width="220", height="120"/>
-				<rect class="rect-first" id="fox_rect" width="220", height="120"/>
-			</svg>
-			<div class="body-container-chyron" width="800" height="120">
-				<p class="chyron-text-first" id="chyron-text-msnbc">KAVANAUGH: I WILL NOT WITHDRAW FROM THIS PROCESS</p>
-				<p class="chyron-text-first" id="chyron-text-cnn">CHRISTINE BLASEY FORD ABOUT TO TESTIFY ON KAVANAUGH ALLEGATIONS</p>
-				<p class="chyron-text-first" id="chyron-text-fox">SEN. GRASSLEY (R-IA) DELIVERS OPENING STATEMENTS</p>
-			</div>
-			<p class="disclaimer">The following is displayed best on Google Chrome. If you're not already using Chrome, consider switching over.</p>
-
+		<svg id="svg-chyron1" width="100%"></svg>
+		<div id="disclaimer">
+			<p id="disclaimer-text">The following is displayed best on Google Chrome. If you're not already using Chrome, consider switching over.</p>
 		</div>
 	</section>
+
+
 	<section id='scroll'>
 		<div class='scroll__graphic'>
-			<svg id="scroll-svg" width="100%" height="100%"></svg>
+			<svg id="scroll-svg"></svg>
 		</div>
 		<div class='scroll__text'>
 			<div class='step' data-step='1'>
@@ -65,90 +52,54 @@
 			</div>
 		</div>
 	</section>
+	<div id="gray-wrapper">
+		<section id="screen9">
+			<div class="container-text">
+				<p>We've seen that networks favored one hearing over the other in how often they changed their chyrons,
+					but can we say the same about the content? Oftentimes, what is communicated in chyrons can reveal editorial decisions that demonstrate a particular
+					slant on the news story, and based on differences we've already seen between the three networks, we might expect to see similar differences here.<br><br>
 
-	<section id="midscreens">
-		<div id="gray-wrapper">
-			<section id="screen9">
-				<div class="body-container-first" style="top: 80px">
-					<p class="intro-text">We've seen that networks favored one hearing over the other in how often they changed their chyrons,
-						but can we say the same about the content? Oftentimes, what is communicated in chyrons can reveal editorial decisions that demonstrate a particular
-						slant on the news story, and based on differences we've already seen between the three networks, we might expect to see similar differences here.<br><br>
-
-						To get an understanding of this, let's categorize chyrons into two types. The first type includes those that describe the event that is being
-						broadcasted or will be broadcasted in the near future. Chyrons of this type probably won't vary much by network.<br><br>Here are some examples:</p>
-				</div>
-			  <div class="body-container-rect">
-					<div class="body-container-brandtext" width="800" height="120">
-						<p class="brand-text" id="brand-text-msnbc">MSNBC</p>
-						<p class="brand-text" id="brand-text-cnn">CNN</p>
-						<p class="brand-text" id="brand-text-fox">Fox News</p>
-					</div>
-					<svg id="svg-rect-first" width="800" height="200">
-						<rect class="rect-first" id="msnbc_rect" width="220", height="120"/>
-						<rect class="rect-first" id="cnn_rect" width="220", height="120"/>
-						<rect class="rect-first" id="fox_rect" width="220", height="120"/></svg>
-					<div class="body-container-chyron" width="800" height="120">
-						<p class="chyron-text-first" id="chyron2-text-msnbc">FORD CONCLUDES TESTIMONY, KAVANAUGH TO SPEAK TO SENATE SOON</p>
-						<p class="chyron-text-first" id="chyron2-text-cnn">CHRISTINE BLASEY FORD ARIVES TO GIVE TESTIMONY HEARING</p>
-						<p class="chyron-text-first" id="chyron2-text-fox">SOON: JUDGE KAVANAUGH TO TESTIFY ON ACCUSATIONS AGAINST HIM</p>
-					</div>
-				</div>
-			</section>
-			<section id="screen10">
-				<div class="body-container-first">
-					<p class="intro-text">The second type of chyron does more than simply state the news topic. In the case of the Ford-Kavanaugh hearings,
-						these chyrons provide details on what was said by Ford and Kavanaugh, using direct and/or indirect quotes.
-						<br><br>Here are some examples:</p>
-				</div>
-			  <div class="body-container-rect">
-					<div class="body-container-brandtext" width="800" height="120">
-						<p class="brand-text" id="brand-text-msnbc">MSNBC</p>
-						<p class="brand-text" id="brand-text-cnn">CNN</p>
-						<p class="brand-text" id="brand-text-fox">Fox News</p>
-					</div>
-					<svg id="svg-rect-first" width="800" height="200">
-						<rect class="rect-first" id="msnbc_rect" width="220", height="120"/>
-						<rect class="rect-first" id="cnn_rect" width="220", height="120"/>
-						<rect class="rect-first" id="fox_rect" width="220", height="120"/></svg>
-					<div class="body-container-chyron" width="800" height="120">
-						<p class="chyron-text-first" id="chyron3-text-msnbc">FORD: KAVANAUGH'S “ASSAULT ON ME DRASTICALLY ALTERED MY LIFE." APART FROM THE ASSAULT, "LAST COUPLE OF WEEKS HAVE BEEN THE HARDEST OF MY LIFE"</p>
-						<p class="chyron-text-first" id="chyron3-text-cnn">FORD: NO POLITICAL MOTIVATION FOR COMING FORWARD</p>
-						<p class="chyron-text-first" id="chyron3-text-fox">KAVANAUGH: FALSE ALLEGATIONS HAVE DESTROYED MY FAMILY AND MY NAME</p>
-					</div>
-				</div>
-				<div class="body-container-last">
-					<p class="intro-text">You might expect chyrons of this type to vary by network as judgment calls must be made around what are most important to highlight.
-						Let's take a look.</p>
-				</div>
-			</section>
-		</div>
-		<section id="screen11">
-			<div id="screen11-trigger"></div>
-			<div class="body-container-first">
-				<p class="intro-text">Chyrons detailing Ford's words account for a sizable portion of chyrons displayed on CNN and MSNBC, but just a fraction for Fox News. When it comes to Kavanaugh's words, Fox News highlights many more.
-				<br><br>Scroll over each circle to read the chyron that was displayed.</p>
+					To get an understanding of this, let's categorize chyrons into two types. The first type includes those that describe the event that is being
+					broadcasted or will be broadcasted in the near future. Chyrons of this type probably won't vary much by network.<br><br>Here are some examples:</p>
 			</div>
-			<div class="body-container-rect" style="top: 0px">
-				<svg id="screen11-svg" width="926" height="600">
-				</svg>
+			<svg id="svg-chyron2" width="100%"></svg>
+		</section>
+		<section id="screen10">
+			<div class="container-text">
+				<p>The second type of chyron does more than simply state the news topic. In the case of the Ford-Kavanaugh hearings,
+					these chyrons provide details on what was said by Ford and Kavanaugh, using direct and/or indirect quotes.
+					<br><br>Here are some examples:</p>
+			</div>
+		  <svg id="svg-chyron3" width="100%"></svg>
+			<div class="container-text">
+				<p>You might expect chyrons of this type to vary by network as judgment calls must be made around what are most important to highlight.
+					Let's take a look.</p>
 			</div>
 		</section>
+	</div>
+	<section id="screen11">
+		<div id="screen11-trigger"></div>
+		<div class="container-text">
+			<p>Chyrons detailing Ford's words account for a sizable portion of chyrons displayed on CNN and MSNBC, but just a fraction for Fox News. When it comes to Kavanaugh's words, Fox News highlights many more.
+			<br><br>Scroll over each circle to read the chyron that was displayed.</p>
+		</div>
+		<svg id="svg-screen11" width="100%"></svg>
 	</section>
 	<div id="gray-wrapper2">
 		<section id='outro'>
-			<div class="body-container-first" style="top:10px">
-				<p class="intro-text">Explore on your own and look for other findings! <br><br>Use the slider to move throughout the day and click on each circle
+			<div id='outro-text' class="container-text">
+				<p>Explore on your own and look for other findings! <br><br>Use the slider to move throughout the day and click on each circle
 				to see the chyron that was displayed, along with those that were displayed by other networks at a similar time.</p>
 			</div>
 			<div class="container-svg-tool">
-				<svg id="tool-svg" width="100%" height="100%"></svg>
+				<svg id="svg-tool" width="100%" height="100%"></svg>
 				<input id="slider" class="slider" type="range" min="0" max="8" step="1" value="0" orient="horizontal"></input>
 			</div>
 		</section>
 	</div>
 	<section id='methods'>
-		<p class="methods-text">Chyron data and the inspiration for this story come from <a href="https://www.washingtonpost.com/graphics/2018/politics/kavanaugh-ford-hearing-chyrons/?utm_term=.66080a0969d4">this</a> news story by The Washington Post.<br><br>
-		All charts were developed using d3.js.<br><br>You may find all the code and data for this project on <a href="https://github.com/namisumida/fordkav_chyron">Github</a>.</p>
+		<p class="methods-text">Chyron data and the inspiration for this story come from <a href="https://www.washingtonpost.com/graphics/2018/politics/kavanaugh-ford-hearing-chyrons/?utm_term=.66080a0969d4">this</a> news story by The Washington Post.<br>
+		All charts were developed using d3.js.<br>You may find all the code and data for this project on <a href="https://github.com/namisumida/fordkav_chyron">Github</a>.</p>
 	</section>
 	<div class='debug'></div>
 
@@ -157,6 +108,7 @@
 	<script src='https://unpkg.com/intersection-observer@0.5.0/intersection-observer.js'></script>
 	<script src='js/scrollama.min.js'></script>
 	<script src='js/utils.js'></script>
+	<script src='js/chyrons.js'></script>
 	<script src='js/build.js'></script>
 	<script src='js/exit_screens.js'></script>
 	<script src='js/enter_screens.js'></script>
@@ -172,19 +124,10 @@
 		var scroller = scrollama();
 		// generic window resize listener event
 		function handleResize() {
-			// 1. update height of step elements
-			var stepHeight = Math.floor(window.innerHeight * 0.75);
+			// update height of step elements
+			var stepHeight = Math.floor(window.innerHeight);
 			step.style('height', stepHeight + 'px');
-			// 2. update width/height of graphic element
-			var bodyWidth = d3.select('body').node().offsetWidth;
-			var graphicMargin = 16 * 4;
-			var textWidth = text.node().offsetWidth;
-			var graphicWidth = container.node().offsetWidth - textWidth - graphicMargin;
-			var graphicHeight = Math.floor(window.innerHeight / 2)
-			graphic
-				.style('width', graphicWidth + 'px')
-				.style('height', graphicHeight + 'px')
-			// 3. tell scrollama to update new element dimensions
+			// tell scrollama to update new element dimensions
 			scroller.resize();
 		}
 		// scrollama event handlers
@@ -228,32 +171,32 @@
 			// this will also initialize trigger observations
 			// 3. bind scrollama event handlers (this can be chained like below)
 			scroller.setup({
-				container: '#scroll',
-				graphic: '.scroll__graphic',
-				text: '.scroll__text',
-				step: '.scroll__text .step',
-				offset: 0.4,
-			})
+					container: '#scroll',
+					graphic: '.scroll__graphic',
+					text: '.scroll__text',
+					step: '.scroll__text .step',
+					offset: 0.2,
+				})
 				.onStepEnter(handleStepEnter)
 				.onContainerEnter(handleContainerEnter)
 				.onContainerExit(handleContainerExit);
 			// setup resize event
 			window.addEventListener('resize', handleResize);
-		}
+		}; // end init function
 		// kick things off
 		init();
 
 		var scroller2 = scrollama();
 		scroller2.setup({
-			container: '#screen11',
-			graphic: '#screen11-svg',
-			text: '#screen11-trigger',
-			step: '#screen11-trigger',
-			offset: 0.4
-		})
-			.onStepEnter(enter_screen11)
-			.onContainerEnter(handleContainerEnter)
-			.onContainerExit(handleContainerExit);
+								container: '#screen11',
+								graphic: '#screen11-svg',
+								text: '#screen11-trigger',
+								step: '#screen11-trigger',
+								offset: 0.4
+						  })
+							.onStepEnter(enter_screen11)
+							.onContainerEnter(handleContainerEnter)
+							.onContainerExit(handleContainerExit);
 
 	</script>
 </body>

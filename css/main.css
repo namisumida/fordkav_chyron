@@ -2,176 +2,173 @@ html, body{
   height: 100%;
   scroll-behavior: smooth;
   font-family: 'Open Sans', sans-serif;
+  min-width: 340px;
+}
+@media screen and (min-width: 400px) {
+  h1 {
+    font-size: 45px;
+    text-align: center;
+    font-weight: 800;
+  }
+  h3 {
+    font-weight: 100;
+    font-size: 16px;
+    text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  p {
+    font-weight: 200;
+    font-size: 14px;
+    display: inline-block;
+    text-align: left;
+  }
+  .chyronText {
+    font-size: 14px;
+    font-weight: 600;
+    text-anchor: middle;
+  }
+  .brandText {
+    font-size: 16px;
+    font-weight: 700;
+    text-anchor: middle;
+  }
+  .countText {
+    text-anchor: middle;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .introText {
+    font-weight: 200;
+    font-size: 14px;
+    fill: none;
+  }
+  .descriptionText {
+    font-size: 11px;
+  }
+  .timelineTimeText {
+    fill: gray;
+    font-size: 12px;
+  }
+  .timelineText {
+    text-anchor: middle;
+    font-size: 12px;
+  }
+  .chyronTimeText {
+    fill: black;
+    font-size: 11px;
+    text-anchor: end;
+  }
+}
+@media screen and (max-width: 400px) {
+  h1 {
+    font-size: 25px;
+    text-align: center;
+    font-weight: 800;
+  }
+  h3 {
+    font-weight: 100;
+    font-size: 14px;
+    text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  p {
+    font-weight: 200;
+    font-size: 12px;
+    display: inline-block;
+    text-align: left;
+  }
+  .chyronText {
+    font-size: 13px;
+    font-weight: 600;
+    text-anchor: middle;
+  }
+  .brandText {
+    font-size: 14px;
+    font-weight: 700;
+    text-anchor: middle;
+  }
+  .countText {
+    text-anchor: middle;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .introText {
+    font-weight: 200;
+    font-size: 12px;
+    fill: none;
+  }
+  .descriptionText {
+    font-size: 10px;
+  }
+  .timelineTimeText {
+    fill: gray;
+    font-size: 10px;
+  }
+  .timelineText {
+    text-anchor: middle;
+    font-size: 10px;
+  }
+  .chyronTimeText {
+    fill: black;
+    font-size: 10px;
+    text-anchor: end;
+  }
 }
 #intro {
-  margin-bottom: 100px;
+  margin: 0 auto;
+  padding-bottom: 100px;
   background-color: #F7F7F7;
-  height: 850px;
 }
-.opener-title {
-  top: 50px;
+#container-title {
   max-width: 600px;
   position: relative;
   margin: 0 auto;
   line-height: 1.5;
-}
-#opener-title {
-  font-size: 45px;
-  text-align: center;
-  font-weight: 800;
-}
-#opener-subtitle {
-  font-weight: 100;
-  font-size: 16px;
-  text-align: center;
-  width: 450px;
   margin: 0 auto;
 }
-
-.body-container-first {
+.container-text {
   max-width: 600px;
   margin: 0 auto;
   position: relative;
-  top: 100px;
   line-height: 1.6;
 }
-.body-container-last {
-  max-width: 600px;
-  margin: 0 auto;
+#container-intro-text {
+  margin-top: 30px;
+}
+#svg-chyron1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#disclaimer {
   position: relative;
-  top: 150px;
-  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 600px;
 }
-.disclaimer {
+#disclaimer-text {
   font-size: 10px;
   font-weight: 200;
   text-align: left;
 }
-.intro-text {
-  font-weight: 200;
-  font-size: 16px;
-  display: inline-block;
-  text-align: left;
-}
-
-.body-container-rect {
-  width: 800px;
-  position: relative;
-  top: 140px;
-  margin: 0 auto;
-}
-#msnbc_rect {
-  position: absolute;
-  x: 30px;
-  y: 50px;
-  fill:rgb(232,164,51);
-}
-#cnn_rect {
-  position: absolute;
-  x: 290px;
-  y: 50px;
-  fill: rgb(212,89,84);
-}
-#fox_rect {
-  position: absolute;
-  x: 550px;
-  y: 50px;
-  fill: rgb(20,151,252);
-}
-
-.body-container-brandtext {
-  position: relative;
-}
-.brand-text {
-  font-size: 16px;
-  font-weight: 700;
-}
-#brand-text-msnbc {
-  position: absolute;
-  text-align: center;
-  left: 30px;
-  width: 220px;
-}
-#brand-text-cnn {
-  position: absolute;
-  text-align: center;
-  left: 290px;
-  width: 220px;
-}
-#brand-text-fox {
-  position: absolute;
-  text-align: center;
-  left: 550px;
-  width: 220px;
-}
-
-.chyron-text-first {
-  position: relative;
-  font-size: 14px;
-  font-weight: 600;
-}
-#chyron-text-msnbc {
-  position: absolute;
-  text-align: center;
-  top: 70px;
-  left: 30px;
-  width: 220px;
-}
-#chyron-text-cnn {
-  position: absolute;
-  text-align: center;
-  top: 70px;
-  left: 290px;
-  width: 220px;
-}
-#chyron-text-fox {
-  position: absolute;
-  text-align: center;
-  top: 70px;
-  left: 550px;
-  width: 220px;
-}
 
 
-.intro_text {
-  font-weight: 200;
-  font-size: 15px;
-  text-anchor: start;
-}
-.count_text {
-  text-anchor: middle;
-  font-size: 22;
-  font-weight: 700;
-}
-.chyron_text {
-  text-anchor: middle;
-  font-size: 14px;
-  font-weight: 600;
-}
-.description {
-  font-size: 11px;
-}
-.tool_chyrontext {
-  font-weight: 400;
-}
 
 
+.descriptionLine {
+  stroke-width: 1;
+}
 
 /* scrollama */
 #scroll {
-  max-width: 1000px;
   margin: auto;
+  margin-top: 30px;
 }
 .scroll__graphic {
   position: sticky;
   float: right;
+  width: 93%;
   top: 20px;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-#scroll-svg {
-  max-width: 1000px;
 }
 .scroll__text {
   position: relative;
@@ -189,101 +186,59 @@ html, body{
 }
 
 #gray-wrapper {
+  position: relative;
   background-color: #F7F7F7;
-  height: 1250px;
 }
 #screen9 {
-  margin: 0 auto;
-  position: relative;
   line-height: 1.6;
+}
+#svg-chyron2 {
+  margin-top: 20px;
 }
 #screen10 {
-  margin: 0 auto;
-  position: relative;
-  top: 75px;
   line-height: 1.6;
+  padding-bottom: 10px;
 }
-#chyron2-text-msnbc {
-  position: absolute;
-  text-align: center;
-  top: 60px;
-  left: 35px;
-  width: 210px;
-}
-#chyron2-text-cnn {
-  position: absolute;
-  text-align: center;
-  top: 60px;
-  left: 295px;
-  width: 210px;
-}
-#chyron2-text-fox {
-  position: absolute;
-  text-align: center;
-  top: 60px;
-  left: 555px;
-  width: 210px;
-}
-#chyron3-text-msnbc {
-  position: absolute;
-  text-align: center;
-  top: 50px;
-  left: 35px;
-  width: 205px;
-  font-size: 12px;
-  line-height: 1.4;
-}
-#chyron3-text-cnn {
-  position: absolute;
-  text-align: center;
-  top: 60px;
-  left: 295px;
-  width: 210px;
-}
-#chyron3-text-fox {
-  position: absolute;
-  text-align: center;
-  top: 52px;
-  left: 555px;
-  width: 210px;
-}
-#midscreens {
-  position: relative;
+#svg-chyron3 {
+  margin-top: 20px;
 }
 #screen11 {
-  margin: 0 auto;
-  position: relative;
   line-height: 1.6;
-  height: 750px;
-  top: -40px;
+  margin-top: 20px;
 }
-#screen11-svg {
-  max-width: 1000px;
+#svg-screen11 {
+  margin-top: 30px;
 }
+
+
+
+
 
 #gray-wrapper2 {
   position: relative;
   background-color: #F7F7F7;
-  height: 700px;
 }
 #outro {
-  height: 700px;
   max-width: 900px;
-  width: 100%;
   margin: 0 auto;
   position: relative;
 }
 .container-svg-tool {
   position: relative;
   width: 100%;
-  height: 600px;
 }
-#tool-svg {
+#svg-tool {
   position: relative;
-  top: 305px;
-  -moz-transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+}
+.timelineRect {
+  fill: orange;
+  opacity: 0.3;
+  stroke: none;
+}
+.timeLine {
+  stroke-width: 13px;
+  opacity: 0.3;
+  stroke: gray;
 }
 .slidecontainer {
   width: 100%;
@@ -292,11 +247,8 @@ html, body{
   -webkit-appearance: none;
   position: absolute;
   height: 10px;
-  width: 475px;
   background: rgb(173,173,173);
   opacity: 0.8;
-  left: 120px;
-  top: 40px;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
@@ -307,7 +259,7 @@ html, body{
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 53px; /* Set a specific slider handle width */
+    width: 11.1%; /* Set a specific slider handle width */
     height: 20px; /* Slider handle height */
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
@@ -318,19 +270,12 @@ html, body{
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
-
-
-
 #methods {
   margin: 0 auto;
   position: relative;
   max-width: 600px;
-  margin-bottom: 200px;
-  height: 100px;
+  margin-bottom: 100px;
 }
 .methods-text {
-  font-weight: 200;
   font-size: 11px;
-  display: inline-block;
-  text-align: left;
 }
